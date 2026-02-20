@@ -10,7 +10,9 @@ The vCluster Platform Workshop provides hands-on exercises that introduce platfo
   - A Kubernetes cluster vind (vCluster in Docker) is recommended and vind requires Docker Desktop (or an alternative like Orbstack (recommended for Mac))
   - Allow egress traffic from vCluster Platform pods to https://admin.loft.sh/* (HTTPS, port 443) to enable license retrieval and validation.
 
-## Labs
+## Module 1: vCluster Tenancy Models
+
+### Tenancy Model Labs
 
 These labs are hands-on examples that will show how vCluster Platform
 

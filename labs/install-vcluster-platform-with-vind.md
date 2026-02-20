@@ -59,7 +59,7 @@ experimental:
         - chart:
             name: vcluster-platform
             repo: https://charts.loft.sh/
-            version: 4.7.0-rc.3
+            version: 4.7.0-rc.4
           values: |-
             config:
               costControl:
