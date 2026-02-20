@@ -1,6 +1,6 @@
-# Install vCluster Platform with vind
+# Install vCluster Platform Using vind
 
-vCluster in Docker (vind) allows you to deploy a complete Kubernetes cluster using Docker containers. This allows installing vCluster Platform anywhere you can run Docker.
+vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside Docker containers. This makes it possible to install and experiment with vCluster Platform on any machine that supports Docker — without requiring external cloud infrastructure.
 
 1. Install the vCluster CLI: 
    - **Mac (Silicon/Arm):** 
@@ -18,13 +18,7 @@ vCluster in Docker (vind) allows you to deploy a complete Kubernetes cluster usi
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::User);
     ```
 
-2. Configure the vCluster CLI to use the `docker` driver (the default driver is `helm`):
-
-```bash
-vcluster use driver docker
-```
-
-3. Create `vcluster.yaml` file with the following content:
+2. Create `vcluster.yaml` file with the following content:
 
 ```yaml
 experimental:
@@ -62,6 +56,8 @@ experimental:
             version: 4.7.0-rc.4
           values: |-
             config:
+              # only uncomment if you have your own FQDN to use for vCluster Platform
+              # loftHost: "<your-fully-qualifed-domain-name>"
               costControl:
                 enabled: false
               imageBuilder:
@@ -71,17 +67,32 @@ experimental:
             namespace: vcluster-platform
 ```
 
-This [*vcluster.yaml*](https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/) configuration creates a fully functional Kubernetes cluster with 3 nodes (1 control plane node and 2 worker nodes) inside Docker containers and installs ingress-nginx and vCluster Platform into that vCluster Standalone cluster.
+This [*vcluster.yaml*](https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/) configuration creates a vCluster Standalone Kubernetes cluster with three nodes (one control plane and two workers) running inside Docker containers.
 
-4. Create vCluster Standalone Kubernetes cluster with: `vcluster create vcp-cluster --upgrade --values vcluster.yaml`.
-5. Verify the vCluster Standalone Kubernetes cluster:
+It then installs ingress-nginx and vCluster Platform into that cluster, providing a complete local environment for this workshop.
+
+3. Create vCluster Standalone Kubernetes cluster using vCluster-in-Docker (vind):
+
+```bash
+vcluster create vcp-cluster --driver docker --upgrade --values vcluster.yaml
+```
+
+The `--driver docker` flag enables **vCluster-in-Docker (vind)** mode. Instead of deploying into an existing Kubernetes cluster, this command creates a complete Kubernetes cluster inside Docker containers and applies the configuration defined in vcluster.yaml.
+
+By default, the vCluster CLI uses the `helm` driver, which deploys into the current `kube-context` of a pre-existing Kubernetes cluster. Specifying `--driver docker` ensures this lab is fully self-contained and does not depend on any external cluster.
+
+4. Verify the vCluster Standalone Kubernetes cluster:
 
 ```bash
 kubectl get nodes
 kubectl get namespaces
 ```
 
-6. Retrieve the vCluster Labs hosted domain for vCluster Platform:
+5. If `loftHost` is not configured with your own fully qualified domain name (FQDN), vCluster Platform automatically provisions a secure, randomly generated domain for the installation.
+
+For local environments such as vind, using this automatically generated domain is the simplest option. It provides immediate HTTPS access to the platform UI and API without requiring you to configure DNS records, ingress hosts, or certificates on your machine.
+
+The generated domain is stored in the `loft-router-domain` secret in the installation namespace and can be retrieved with the following:
 
 ```bash
 PLATFORM_NAMESPACE=vcluster-platform
@@ -105,8 +116,22 @@ DOMAIN=$(kubectl get secret loft-router-domain \
 echo "Open: https://${DOMAIN}"
 ```
 
-7. Open the vCluster Platform hosted domain in your browser and login with `username: admin` and `password: my-password`. These credentials are the default bootstrap credentials configured by the Helm chart. You can override them via the vCluster Platform chart values.
-8. After logging into vCluster Platform follow the on-screen instructions to retrieve and enter your vCluster Platform activation code (ensuring that you use a valid email for the activation code).
+6. Open the vCluster Platform hosted domain in your browser and log in with:
+
+- `username: admin`
+- `password: my-password`
+
+These credentials are the default bootstrap credentials defined by the Helm chart. You can override them via the vCluster Platform chart values.
+
+7. After logging into vCluster Platform follow the on-screen instructions to retrieve and enter your vCluster Platform activation code.
+
+> [!NOTE]
+> You will need a valid email address to receive your vCluster Platform activation code.  
+> Activating your installation enables the [**Free tier** of vCluster Platform](https://www.vcluster.com/docs/platform/free-vs-enterprise), which is sufficient for completing this workshop.
+
+> [!WARNING]
+> This vind-based environment is intended for local development and workshop use.  
+> For production deployments, configure `loftHost` with your organization’s domain and TLS configuration.
 
 ## Troubleshooting
 
