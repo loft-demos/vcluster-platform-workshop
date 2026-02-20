@@ -106,7 +106,7 @@ echo "Open: https://${DOMAIN}"
 ```
 
 7. Open the vCluster Platform hosted domain in your browser and login with `username: admin` and `password: my-password`. These credentials are the default bootstrap credentials configured by the Helm chart. You can override them via the vCluster Platform chart values.
-8. After logging into vCluster Platform follow the on-screen instructions to get your vCluster Platform activation code (ensuring that you use a valid email for the activation code).
+8. After logging into vCluster Platform follow the on-screen instructions to retrieve and enter your vCluster Platform activation code (ensuring that you use a valid email for the activation code).
 
 ## Troubleshooting
 
