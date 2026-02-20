@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    metadata:
+      labels:
+        app: podinfo
+    spec:
+      containers:
+        - name: podinfo
+          image: ghcr.io/stefanprodan/podinfo:6.9.2
+          ports:
+            - containerPort: 9898
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: PODINFO_UI_MESSAGE
+              value: "vCluster Auto Nodes with vCluster VPN · Node: $(NODE_NAME)"
+            - name: PODINFO_UI_LOGO
+              value: "https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8b29/6899d1b17a88c594e25f4da3_Real%20Isolation.svg"
+          resources:
+            requests:
+              cpu: 2.5
+              memory: 256Mi
+            limits:
+              cpu: 3
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podinfo
+  namespace: demo
+spec:
+  sessionAffinity: None
+  internalTrafficPolicy: Cluster 
+  selector:
+    app: podinfo
+  ports:
+    - port: 80
+      targetPort: 9898
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: podinfo
+  namespace: demo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /podinfo(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: podinfo
+                port:
+                  number: 9898
+ 
