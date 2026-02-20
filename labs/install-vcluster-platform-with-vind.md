@@ -74,7 +74,7 @@ It then installs ingress-nginx and vCluster Platform into that cluster, providin
 > [!NOTE]
 > If you use your own FQDN for vCluster Platform, then you will need to [configure external access and TLS for vCluster Platfrom](https://www.vcluster.com/docs/platform/configure/installation-options/domain)
 
-1. Create vCluster Standalone Kubernetes cluster using vCluster-in-Docker (vind):
+3. Create vCluster Standalone Kubernetes cluster using vCluster-in-Docker (vind):
 
 ```bash
 vcluster create vcp-cluster --driver docker --upgrade --values vcluster.yaml

@@ -18,6 +18,8 @@ experimental:
             controller:
               service:
                 type: LoadBalancer
+              ingressClassResource:
+                default: true
               admissionWebhooks:
                 enabled: false
                 patch:
@@ -28,9 +30,11 @@ experimental:
         - chart:
             name: vcluster-platform
             repo: https://charts.loft.sh/
-            version: 4.7.0-rc.3
+            version: 4.7.0-rc.4
           values: |-
             config:
+              # only uncomment if you have your own FQDN to use for vCluster Platform
+              # loftHost: "<your-fully-qualifed-domain-name>"
               costControl:
                 enabled: false
               imageBuilder:
