@@ -71,10 +71,10 @@ experimental:
             namespace: vcluster-platform
 ```
 
-This creates a full Kubernetes cluster with 3 nodes (1 control plane node and 2 worker nodes) inside Docker containers and installs ingress-nginx and vCluster Platform into that vCluster Standalone cluster.
+This [*vcluster.yaml*](https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/) configuration creates a fully functional Kubernetes cluster with 3 nodes (1 control plane node and 2 worker nodes) inside Docker containers and installs ingress-nginx and vCluster Platform into that vCluster Standalone cluster.
 
-4. Create vCluster Standalone Kubernetes cluster with: `vcluster create vcp-cluster --upgrade --values vcluster.yaml`.
-5. Verify the vCluster Standalone Kubernetes cluster:
+1. Create vCluster Standalone Kubernetes cluster with: `vcluster create vcp-cluster --upgrade --values vcluster.yaml`.
+2. Verify the vCluster Standalone Kubernetes cluster:
 
 ```bash
 kubectl get nodes
