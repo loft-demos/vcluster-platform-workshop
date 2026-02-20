@@ -3,8 +3,8 @@
 vCluster in Docker (vind) allows you to deploy a complete Kubernetes cluster using Docker containers. This allows installing vCluster Platform anywhere you can run Docker.
 
 1. Install the vCluster CLI: 
-   - Mac (Silicon/Arm): `curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/download/v0.32.0/vcluster-darwin-arm64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster`
-   - Windows:
+   - **Mac (Silicon/Arm):** `curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/download/v0.32.0/vcluster-darwin-arm64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster`
+   - **Windows:**
 
     ```bash
     md -Force "$Env:APPDATA\vcluster"; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12';
