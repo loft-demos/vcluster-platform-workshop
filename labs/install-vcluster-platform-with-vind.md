@@ -66,8 +66,10 @@ experimental:
             namespace: vcluster-platform
 ```
 
-4. Create vCluster Standalone Kubernetes cluster with: `vcluster create vcp-cluster --upgrade --values vcluster.yaml`. This creates a full Kubernetes cluster inside Docker containers and installs ingress-nginx and vCluster Platform into it.
-5. Verify the vCluster Standalone Kubernetes cluster:
+This creates a full Kubernetes cluster with 3 nodes (vCluster Standalone) inside Docker containers and installs ingress-nginx and vCluster Platform into that vCluster Standalone cluster.
+
+1. Create vCluster Standalone Kubernetes cluster with: `vcluster create vcp-cluster --upgrade --values vcluster.yaml`.
+2. Verify the vCluster Standalone Kubernetes cluster:
 
 ```bash
 kubectl get nodes
@@ -99,7 +101,7 @@ echo "Open: https://${DOMAIN}"
 ```
 
 7. Open the vCluster Platform hosted domain in your browser and login with `username: admin` and `password: my-password`. These credentials are the default bootstrap credentials configured by the Helm chart. You can override them via the vCluster Platform chart values.
-8. After logging into vCluster Platform follow the on-screen instructions to get your vCluster Platform activation code (ensuring that you use a valid email)
+8. After logging into vCluster Platform follow the on-screen instructions to get your vCluster Platform activation code (ensuring that you use a valid email for the activation code).
 
 ## Troubleshooting
 
