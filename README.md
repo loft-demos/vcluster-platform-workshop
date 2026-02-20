@@ -14,9 +14,8 @@ The vCluster Platform Workshop provides hands-on exercises that introduce platfo
 
 These labs are hands-on examples that will show how vCluster Platform
 
-- Install vCluster Platform with **vind**
+- [Install vCluster Platform with **vind**](./labs/install-vcluster-platform-with-vind.md)
 - Explore vCluster Tenancy Models
 - Creating a Shared Node vCluster
 - Creating a Dedicated Node vCluster
 - Creating a Private Node vCluster
-- 
