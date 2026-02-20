@@ -33,7 +33,7 @@ vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vclus
 
 If you are attending a vCluster Labs-led workshop, complete the following setup before the event.
 
-- [Install vCluster Platform using **vind**](./labs/install-vcluster-platform-with-vind.md)
+- [Install vCluster Platform using **vCluster in Docker (vind)**](./labs/install-vcluster-platform-with-vind.md)
 
 ## Module 1: vCluster Tenancy Models
 

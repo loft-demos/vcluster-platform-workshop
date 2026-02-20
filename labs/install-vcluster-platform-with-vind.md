@@ -1,4 +1,4 @@
-# Install vCluster Platform Using vind
+# Install vCluster Platform Using vCluster in Docker (vind)
 
 vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside Docker containers. This makes it possible to install and experiment with vCluster Platform on any machine that supports Docker — without requiring external cloud infrastructure.
 
