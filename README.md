@@ -1,28 +1,45 @@
 # vCluster Platform Workshop
 
-The vCluster Platform Workshop provides hands-on exercises that introduce platform engineers, DevOps teams, and cloud architects to building secure, scalable, multi-tenant Kubernetes environments using vCluster Platform.
+The vCluster Platform Workshop provides hands-on exercises that introduce platform engineers, DevOps teams, and cloud architects to building secure, scalable, multi-tenant Kubernetes environments using vCluster Platform. vCluster Platform provides the management layer that platform teams need to operate vCluster at scale.
+
+In this workshop, you will learn how to:
+
+- Deploy and manage virtual clusters using vCluster Platform
+- Implement different tenancy models (Shared, Dedicated, and Private Nodes)
+- Enable isolation between teams and workloads
+- Integrate vCluster Platform into GitOps-driven workflows
+- Manage multiple host clusters from a centralized control plane
+
+By the end of the workshop, you will understand how to design and operate production-ready multi-tenant Kubernetes platforms using vCluster and vCluster Platform.
 
 ## Getting Started
 
-In order to complete the labs in this workshop you will need to have a vCluster Platform Kubernetes environment. vCluster Platform must be installed in a Kubernetes cluster and luckily [vCluster-in-Docker (vind)]() makes this easy to setup on your own personal computer running Docker. vind allows running vCluster Standalone in container based VMs, providing a fully functional Kubernetes cluster to install vCluster Platform.
+To complete the labs in this workshop, you will need access to a Kubernetes environment with vCluster Platform installed.
+
+vCluster Platform must be installed into a Kubernetes cluster. The easiest way to get started locally is by using [vCluster-in-Docker (vind)](https://github.com/loft-sh/vind).
+
+vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vcluster/deploy/control-plane/binary/) inside container-based VMs, providing a fully functional Kubernetes cluster where you can install and experiment with vCluster Platform.
 
 ### Prerequisites
 
-- vCluster Platform must be installed into a Kubernetes cluster (using vind fulfills this prerequisite):
-  - Administrator access to a Kubernetes cluster: See Accessing Clusters with kubectl for more information. Your current kube-context must have administrative privileges, which you can verify with `kubectl auth can-i create clusterrole -A`
-- vind requires Docker Desktop (or an alternative like Orbstack (recommended for Mac))
-- Resources: Minimum 2GB RAM and 2 CPU cores available to Docker
-- Allow egress traffic from vCluster Platform pods to https://admin.loft.sh/* (HTTPS, port 443) to enable license retrieval and validation.
+- A Kubernetes cluster with administrator access (**using vind fulfills this prerequisite**)
+  - You can verify administrative privileges with: `kubectl auth can-i create clusterrole -A`
+- vCluster Platform must be installed into the cluster
+- Docker Desktop (or an alternative like Orbstack (recommended for Mac))
+- Minimum 2GB RAM and 2 CPU cores available to Docker
+- Egress access from vCluster Platform pods to `https://admin.loft.sh/*` (HTTPS, port 443) for license retrieval and validation
 
 ### Pre-Workshop Setup
 
-If you are attending a vCluster Labs led vCluster Platform workshop then these setup steps should be completed before the start of the workshop event.
+If you are attending a vCluster Labs-led workshop, complete the following setup before the event.
 
-- [Install vCluster Platform with **vind**](./labs/install-vcluster-platform-with-vind.md)
+- [Install vCluster Platform using **vind**](./labs/install-vcluster-platform-with-vind.md)
 
 ## Module 1: vCluster Tenancy Models
 
-Virtual clusters are fully functional Kubernetes clusters, but how you deploy the control plane and worker nodes defines the tenancy model for the virtual cluster. These labs will provide hands-on examples where you will learn the vCluster configuration and capabilities for these tenancy models.
+Virtual clusters are fully functional Kubernetes clusters, but how you deploy the control plane and worker nodes defines the tenancy model for the virtual cluster.
+
+In this module, you will explore vCluster tenancy models and learn how vCluster Platform enhances, standardizes, and manages them at scale.
 
 ### Tenancy Model Labs
 
@@ -32,10 +49,12 @@ These labs are hands-on examples that will explore vCluster tenancy models with 
 - Create a Dedicated Node vCluster
 - Create a Private Node vCluster
 
-### vCluster Platform Labs
+### vCluster Platform Capabilities Labs
 
 - vCluster Platform Projects
 - Virtual Cluster Templates
 - Connected Host Clusters
 
 ## Module 2: vCluster Platform GitOps
+
+In this module, you will integrate vCluster Platform into a GitOps workflow.
