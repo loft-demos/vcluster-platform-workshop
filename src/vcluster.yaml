@@ -11,6 +11,21 @@ experimental:
     vcluster:
       helm:
         - chart:
+            name: vcluster-platform
+            repo: https://charts.loft.sh/
+            version: 4.7.0
+          values: |-
+            config:
+              # only uncomment if you have your own FQDN to use for vCluster Platform
+              # loftHost: "<your-fully-qualifed-domain-name>"
+              costControl:
+                enabled: false
+              imageBuilder:
+                enabled: false
+          release:
+            name: vcluster-platform
+            namespace: vcluster-platform
+        - chart:
             name: ingress-nginx
             repo: https://kubernetes.github.io/ingress-nginx
             version: 4.14.1
@@ -28,17 +43,31 @@ experimental:
             name: ingress-nginx
             namespace: ingress-nginx
         - chart:
-            name: vcluster-platform
-            repo: https://charts.loft.sh/
-            version: 4.7.0-rc.4
+            name: cloudnative-pg
+            repo: https://cloudnative-pg.github.io/charts
+            version: 0.27.1
           values: |-
+            replicaCount: 1
             config:
-              # only uncomment if you have your own FQDN to use for vCluster Platform
-              # loftHost: "<your-fully-qualifed-domain-name>"
-              costControl:
-                enabled: false
-              imageBuilder:
-                enabled: false
+              create: true
+            crds:
+              create: true
+            monitoring:
+              podMonitorEnabled: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            webhook:
+              port: 9443
+            # Avoid accidental cluster-wide disruption in demo environments
+            leaderElection:
+              leaseDuration: 15s
+              renewDeadline: 10s
+              retryPeriod: 2s
           release:
-            name: vcluster-platform
-            namespace: vcluster-platform
+            name: cnpg
+            namespace: cnpg-system

@@ -53,7 +53,7 @@ experimental:
         - chart:
             name: vcluster-platform
             repo: https://charts.loft.sh/
-            version: 4.7.0-rc.4
+            version: 4.7.0
           values: |-
             config:
               # only uncomment if you have your own FQDN to use for vCluster Platform
