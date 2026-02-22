@@ -29,7 +29,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: PODINFO_UI_MESSAGE
-              value: "vCluster Auto Nodes with vCluster VPN · Node: $(NODE_NAME)"
+              value: "vCluster Platform Workshop · Node: $(NODE_NAME)"
             - name: PODINFO_UI_LOGO
               value: "https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8b29/6899d1b17a88c594e25f4da3_Real%20Isolation.svg"
           resources:

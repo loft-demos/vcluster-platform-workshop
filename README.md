@@ -28,6 +28,8 @@ vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vclus
 - Docker Desktop (or an alternative like [Orbstack](https://orbstack.dev) (recommended for Mac))
 - Minimum 2GB RAM and 2 CPU cores available to Docker
 - Egress access from vCluster Platform pods to `https://admin.loft.sh/*` (HTTPS, port 443) for license retrieval and validation
+- `helm` installed: Helm **v3.10** is required for deploying the platform. Refer to the [Helm Installation Guide](https://helm.sh/docs/intro/install/) if you need to install it
+- `kubectl` installed: Kubernetes command-line tool for interacting with the cluster. See [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) for installation instructions
 
 ### Pre-Workshop Setup
 

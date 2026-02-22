@@ -132,6 +132,14 @@ These credentials are the default bootstrap credentials defined by the Helm char
 > You will need a valid email address to receive your vCluster Platform activation code.  
 > Activating your installation enables the [**Free tier** of vCluster Platform](https://www.vcluster.com/docs/platform/free-vs-enterprise), which is sufficient for completing this workshop.
 
+8. Verify that the ingress-nginx controller was deployed successfully and has a `LoadBalancer` ip address:
+
+```bash
+kubectl get svc ingress-nginx-controller \
+  -n ingress-nginx \
+  -o jsonpath='{.status.loadBalancer.ingress[0].ip}
+```
+
 > [!WARNING]
 > This vind-based environment is intended for local development and workshop use.  
 > For production deployments, configure `loftHost` with your organization’s domain and TLS configuration.
