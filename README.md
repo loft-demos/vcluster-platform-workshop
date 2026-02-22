@@ -25,7 +25,7 @@ vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vclus
 - A Kubernetes cluster with administrator access (**using vind fulfills this prerequisite**)
   - You can verify administrative privileges with: `kubectl auth can-i create clusterrole -A`
 - vCluster Platform must be installed into the cluster
-- Docker Desktop (or an alternative like Orbstack (recommended for Mac))
+- Docker Desktop (or an alternative like [Orbstack](https://orbstack.dev) (recommended for Mac))
 - Minimum 2GB RAM and 2 CPU cores available to Docker
 - Egress access from vCluster Platform pods to `https://admin.loft.sh/*` (HTTPS, port 443) for license retrieval and validation
 

@@ -71,3 +71,5 @@ experimental:
           release:
             name: cnpg
             namespace: cnpg-system
+      manifests: |-
+
