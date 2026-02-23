@@ -6,4 +6,17 @@ While compute is scoped to these dedicated `nodes,` all other components—like 
 
 ## Lab Overview
 
-In this lab, you will:
+In this lab you will:
+
+- Create a parameterized Virtual Cluster Template
+- Use template parameters to define the tenant-specific node label (e.g., tenant-a, team-a)
+- Create a Dedicated Nodes virtual cluster from that template
+- Deploy a workload and verify node placement
+
+## Lab Exercises
+
+### Create a **Dedicated Nodes**  Virtual Cluster Template
+
+This lab exercise walks you through creating a Virtual Cluster Template. A Virtual Cluster Templates is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata.
+
+1. 

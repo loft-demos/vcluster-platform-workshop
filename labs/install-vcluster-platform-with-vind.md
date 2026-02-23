@@ -155,6 +155,10 @@ kubectl get svc ingress-nginx-controller \
 > This vind-based environment is intended for local development and workshop use.  
 > For production deployments, configure `loftHost` with your organization’s domain and TLS configuration.
 
+## What's Next
+
+Continue with the [Shared Nodes Tenancy Model lab](/labs/tenancy-models/shared-nodes.md)
+
 ## Troubleshooting
 
 - If `vcluster create` hangs → ensure Docker is running.

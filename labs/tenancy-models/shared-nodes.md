@@ -75,7 +75,7 @@ kubectl get all -n demo
 
 ### Syncing Resources From the Host Cluster
 
-This lab exercise will explore syncing a `StorageClass` resourse from the shared host cluster into your *Shared Nodes vCluster*.
+This lab exercise will explore syncing a `StorageClass` resources from the shared host cluster into your *Shared Nodes vCluster*.
 
 vCluster can sync certain resources from the host cluster to make them available inside the virtual cluster, but when these resources are synced, they are only synced in read-only mode. No changes to the resource in the virtual cluster syncs back to the host cluster as the resources are shared across the host cluster.
 
@@ -106,6 +106,13 @@ controlPlane:
 6. Once your *Shared Nodes vCluster* is running, navigate back to the **Storage Class** listing under **Inspect Resources** and you will see a `StorageClass` resource named *local-path*.
 
 ### Custom Resource Syncing
+
+This lab exercise walks you through syncing the CloudNativePG (CNPG) `Cluster` custom resource from a virtual cluster to the host cluster. You’ll configure custom resource sync for the CNPG `Cluster` resource type and observe how the vCluster `syncer` detects and automatically syncs back the generated host resources, such as `Pods` and `Services`, into the virtual cluster.
+
+CloudNativePG is an Operator that implements the Kubernetes controller pattern and creates additional resources (via `ownerReferences`), making it ideal for demonstrating bidirectional sync behavior.
+
+1. Navigate to the **Default Project Overview** page, hover over your *Shared Nodes vCluster* and then click the **Edit** button on the right.
+2. 
 
 Update **vcluster.yaml** configuration:
 

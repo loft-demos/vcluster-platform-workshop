@@ -45,18 +45,14 @@ In this module, you will explore the full spectrum of flexible vCluster tenancy 
 
 ### Tenancy Model Labs
 
-These labs are hands-on examples that will explore vCluster tenancy models with vCluster Platform:
+These labs are hands-on examples that will explore vCluster tenancy models in the context of vCluster Platform:
 
-- Create a Shared Node vCluster
-- Create a Dedicated Node vCluster
-- Create a Private Node vCluster
-
-### vCluster Platform Capabilities Labs
-
-- vCluster Platform Projects
-- Virtual Cluster Templates
-- Connected Host Clusters
+- [Shared Nodes Tenancy Model](/labs/tenancy-models/shared-nodes.md)
+- [Dedicated Nodes Tenancy Model](/labs/tenancy-models/dedicated-nodes.md)
+- [Private Nodes Tenancy Model](/labs/tenancy-models/private-nodes.md)
 
 ## Module 2: vCluster Platform GitOps
 
 In this module, you will integrate vCluster Platform into a GitOps workflow.
+
+Coming soon.

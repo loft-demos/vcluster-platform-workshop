@@ -75,25 +75,33 @@ This lab exercise walks you through manually attaching a worker node to your *Pr
 4. Now that you have the command to attach a node to your *Private Nodes vCluster* you need a node to attach. Run the following command to create a VM in a Docker container:
 
 ```bash
-docker run -d --name vm-container \
+docker run -d \
+  --name vcluster.node.private-nodes-vcluster.worker-1 \
+  --hostname worker-1 \
   --privileged \
   --stop-timeout 1 \
-  -v vmc-run:/run \
-  -v vmc-containerd:/var/lib/containerd \
-  -v vmc-kubelet:/var/lib/kubelet \
-  -v vmc-vcluster:/var/lib/vcluster \
+  -v vcluster.node.private-nodes-vcluster.worker-1-run:/run \
+  -v vcluster.node.private-nodes-vcluster.worker-1-containerd:/var/lib/containerd \
+  -v vcluster.node.private-nodes-vcluster.worker-1-kubelet:/var/lib/kubelet \
+  -v vcluster.node.private-nodes-vcluster.worker-1-vcluster:/var/lib/vcluster \
   ghcr.io/loft-sh/vm-container
 ```
 
 5. Once the `vm-container` is up and running run the following commands to `exec` into that container and run the connection command you created above with the token to join the `vm-container` as a worker `node`, noting that you will have to replace the ip address with the one for your control plane node and the token with the one from your join command:
 
 ```bash
-docker exec -it vm-container bash
-curl -fsSLk "https://<replace-with-your-vcp-host>/kubernetes/project/default/virtualcluster/private-nodes-vcluster/node/join?token=<replace-with-your-join-tokne>" | sh -
+docker exec -it vcluster.node.private-nodes-vcluster.worker-1 bash
 ```
 
-6. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to yourm*Private Nodes vCluster*.
-7. Click **Pods** and you will see that the they are either *Running* or starting.
+> Then inside the `vm-container`:
+
+```bash
+curl -fsSLk "https://<replace-with-your-vcp-host>/kubernetes/project/default/virtualcluster/private-nodes-vcluster/node/join?token=<replace-with-your-join-tokne>" | sh -
+exit
+```
+
+1. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to yourm*Private Nodes vCluster*.
+2. Click **Pods** and you will see that the they are either *Running* or starting.
 
 ### Deploy a Workload to Your *Private Nodes vCluster*
 
