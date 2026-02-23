@@ -145,7 +145,7 @@ These credentials are the default bootstrap credentials defined by the Helm char
 ```bash
 kubectl get svc ingress-nginx-controller \
   -n ingress-nginx \
-  -o jsonpath='{.status.loadBalancer.ingress[0].ip}
+  -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
 ```
 
 > [!WARNING]
