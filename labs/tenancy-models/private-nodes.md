@@ -1,7 +1,5 @@
 # Private Nodes Tenancy Model
 
-Although the **Private Nodes** tenancy model vCluster control plane is deployed as a `Pod` on a host cluster just like the Shared Node vCluster. The Private Nodes tenancy model virtual cluster does not sync any resources and its worker nodes must be provisioned and joined - either manually or automatically with [vCluster Auto Nodes](https://www.vcluster.com/docs/vcluster/deploy/worker-nodes/private-nodes/auto-nodes/).  Because Private Nodes virtual clusters have physically separate nodes, they must have a Kubernetes scheduler and separate infrastructure components like CNI and CSI drivers.
-
 In the **Private Nodes** tenancy model, the vCluster control plane is still deployed as a `Pod` on the host cluster — just like with the Shared Nodes tenancy.
 
 However, unlike Shared Nodes:
