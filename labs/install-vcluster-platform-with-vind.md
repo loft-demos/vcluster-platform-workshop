@@ -9,7 +9,7 @@ vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside
     curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/download/v0.32.0/vcluster-darwin-arm64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster
     ```
 
-   - **Windows:**
+   - **Windows Powershell:**
 
     ```bash
     md -Force "$Env:APPDATA\vcluster"; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12';
