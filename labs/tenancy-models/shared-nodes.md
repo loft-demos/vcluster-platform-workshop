@@ -104,3 +104,102 @@ controlPlane:
 
 5. Click the **Save** button at the bottom-right of the page which will result in your *Shared Nodes vCluster* control plane restarting to load these config changes.
 6. Once your *Shared Nodes vCluster* is running, navigate back to the **Storage Class** listing under **Inspect Resources** and you will see a `StorageClass` resource named *local-path*.
+
+### Custom Resource Syncing
+
+Update **vcluster.yaml** configuration:
+
+```yaml
+sync:
+  toHost:
+    ingresses:
+      enabled: true
+    secrets:
+      enabled: true
+    customResources:
+      clusters.postgresql.cnpg.io/v1:
+        enabled: true
+        patches:
+          # Rewrite references to superuser Secret when syncing to host
+          - path: spec.superuserSecret.name
+            reference:
+              apiVersion: v1
+              kind: Secret
+  fromHost:
+    storageClasses:
+      enabled: true
+controlPlane:
+  coredns:
+    enabled: true
+    embedded: true
+  backingStore:
+    etcd:
+      embedded:
+        enabled: true
+```
+
+Create a cnpg `cluster` resoruce in your *Shared Nodes vCluster*.
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cnpg-demo
+---
+# App DB user (used by bootstrap.initdb)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+  namespace: cnpg-demo
+type: kubernetes.io/basic-auth
+stringData:
+  username: app
+  password: app-password
+---
+# Postgres superuser password (postgres)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: superuser-secret
+  namespace: cnpg-demo
+type: kubernetes.io/basic-auth
+stringData:
+  username: postgres
+  password: postgres-password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: demo-pg
+  namespace: cnpg-demo
+spec:
+  instances: 1
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+  superuserSecret:
+    name: superuser-secret
+
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+
+  storage:
+    size: 1Gi
+    storageClass: local-path
+
+  managed:
+    roles:
+      - name: reporting_user
+        login: true
+```
+
+See resources synced back into your *Shared Nodes vCluster*.

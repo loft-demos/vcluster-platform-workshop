@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cnpg-demo
+---
+# Postgres superuser password (postgres)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: superuser-secret
+  namespace: cnpg-demo
+type: kubernetes.io/basic-auth
+stringData:
+  username: postgres
+  password: postgres-password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: demo-pg
+  namespace: cnpg-demo
+spec:
+  instances: 1
+
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+  superuserSecret:
+    name: demo-pg
+
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+
+  storage:
+    size: 1Gi
+    storageClass: local-path
+  
+  managed:
+    roles:
+      - name: reporting_user
+        login: true
