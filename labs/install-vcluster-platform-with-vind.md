@@ -88,6 +88,9 @@ It then installs ingress-nginx and vCluster Platform into that cluster, providin
 vcluster create vcp-cluster --driver docker --upgrade --values vcluster.yaml
 ```
 
+> [!NOTE]
+> If you are using Docker Desktop, you may have to run the above command with `sudo` for permissions to create the `LoadBalancer` for the ingress-nginx install.
+
 The `--driver docker` flag enables **vCluster-in-Docker (vind)** mode. Instead of deploying into an existing Kubernetes cluster, this command creates a complete Kubernetes cluster inside Docker containers and applies the configuration defined in vcluster.yaml.
 
 By default, the vCluster CLI uses the `helm` driver, which deploys into the current `kube-context` of a pre-existing Kubernetes cluster. Specifying `--driver docker` ensures this lab is fully self-contained and does not depend on any external cluster.
