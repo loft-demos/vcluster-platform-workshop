@@ -4,6 +4,8 @@ In the **Dedicated Nodes** tenancy model, the vCluster control plane is still de
 
 While compute is scoped to these dedicated `nodes,` all other components—like the CNI, CSI, and underlying Kubernetes host cluster—remain shared. The vCluster itself maintains full API isolation, separate CRDs, tenant-specific RBAC, and control plane security
 
+![Dedicated Nodes Architecture](https://www.vcluster.com/docs/assets/images/dedicated-nodes-66b5934ba465de8cfa30aba0399b2fbd.png)
+
 ## Lab Overview
 
 In this lab you will:
@@ -20,3 +22,7 @@ In this lab you will:
 This lab exercise walks you through creating a Virtual Cluster Template. A Virtual Cluster Templates is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata.
 
 1. 
+
+## What's Next
+
+Continue with the [Private Nodes Tenancy Model Lab](/labs/tenancy-models/private-nodes.md)

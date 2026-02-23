@@ -157,7 +157,7 @@ kubectl get svc ingress-nginx-controller \
 
 ## What's Next
 
-Continue with the [Shared Nodes Tenancy Model lab](/labs/tenancy-models/shared-nodes.md)
+Continue with the [Shared Nodes Tenancy Model Lab](/labs/tenancy-models/shared-nodes.md)
 
 ## Troubleshooting
 

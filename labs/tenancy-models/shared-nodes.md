@@ -2,6 +2,8 @@
 
 The **Shared Nodes** tenancy model allows multiple virtual clusters to run workloads on the same physical Kubernetes nodes, with the vCluster syncing resources to and from the host cluster. The control plane of the vCluster is deployed as a `Pod` on a host cluster while vCluster workload `Pods` are synced  to and then scheduled on the host cluster worker nodes. This configuration is ideal for scenarios where maximizing resource utilization is a top priority—especially for internal developer environments, CI/CD pipelines, and cost-sensitive use cases.
 
+![Shared Nodes Architecture](https://www.vcluster.com/docs/assets/images/shared-nodes-db4220d444d97681ca3b7f394a8ea81f.png)
+
 ## Lab Overview
 
 In this lab you will:
@@ -210,3 +212,7 @@ spec:
 ```
 
 See resources synced back into your *Shared Nodes vCluster*.
+
+## What's Next
+
+Continue with the [Dedicated Nodes Tenancy Model Lab](/labs/tenancy-models/dedicated-nodes.md)

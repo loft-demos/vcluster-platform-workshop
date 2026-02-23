@@ -41,7 +41,7 @@ If you are attending a vCluster Labs-led workshop, complete the following setup 
 
 Virtual clusters are fully functional Kubernetes clusters, but how you deploy the control plane and worker nodes defines the tenancy model for the virtual cluster.
 
-In this module, you will explore the full spectrum of flexible vCluster tenancy models and learn how vCluster Platform enhances, standardizes, and manages them at scale.
+In this module, you will explore the full spectrum of flexible vCluster tenancy models - [Shared Nodes](https://www.vcluster.com/docs/vcluster/introduction/architecture#shared-nodes), [Dedicated Nodes](https://www.vcluster.com/docs/vcluster/introduction/architecture#dedicated-nodes) and [Private Nodes](https://www.vcluster.com/docs/vcluster/introduction/architecture#private-nodes) - and learn how vCluster Platform enhances, standardizes, and manages them at scale.
 
 ### Tenancy Model Labs
 

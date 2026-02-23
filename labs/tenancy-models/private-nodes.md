@@ -10,6 +10,8 @@ However, unlike Shared Nodes:
 
 Worker nodes must be provisioned and explicitly joined — either manually or automatically using [vCluster **Auto Nodes**](https://www.vcluster.com/docs/vcluster/deploy/worker-nodes/private-nodes/auto-nodes/).
 
+![Private Nodes Architecture](https://www.vcluster.com/docs/assets/images/private-nodes-fedb18ec71f1d8b9776c358324d79456.png)
+
 ## Lab Overview
 
 In this lab, you will:
