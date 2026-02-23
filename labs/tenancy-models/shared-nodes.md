@@ -6,10 +6,10 @@ The **Shared Nodes** tenancy model allows multiple virtual clusters to run workl
 
 In this lab you will:
 
-- Use vCluster Platform to create a virtual cluster instance that uses the shared node tenancy model.
-- Deploy a workload into the shared node virtual cluster.
-- Configure the shared node virtual cluster to sync a resource from the host cluster into the virtual cluster.
-- Configure a shared node virtual cluster to sync a custom resource to the host cluster.
+- Use vCluster Platform to create a virtual cluster instance that uses the shared nodes tenancy model.
+- Deploy a workload into the shared nodes virtual cluster.
+- Configure the shared nodes virtual cluster to sync a resource from the host cluster into the virtual cluster.
+- Configure a shared nodes virtual cluster to sync a custom resource to the host cluster.
 
 ## Lab Exercises
 
@@ -43,7 +43,7 @@ controlPlane:
 > The [`vcluster.yaml` configuration file](https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/) defines how your virtual cluster operates and integrates with the host cluster. Use the `vcluster.yaml` file to configure vCluster. It allows you to override default settings by specifying resource sync rules, networking behavior, storage options, and authentication methods.
 
 5. Next, click the **Create virtual cluster** button at the bottom right of the page.
-6. Once your *Shared Nodes vCluster* is up an running, click on the **Inspect Resources** button - under and to the right of the **Control Plane Pods Status** - to view the Kubernetes resources inside of the *Shared Nodes vCluster*. Click on **Nodes** and you will see *No Node found*. That is because `Nodes` only appear in a shared nodes vCluster once a vCluster workload `Pod` is created in the vCluster and synced to the host cluster.
+6. Once your *Shared Nodes vCluster* is up an running, click on the **Inspect Resources** button - under and to the right of the **Control Plane Pods Status** - to view the Kubernetes resources inside your *Shared Nodes vCluster*. Click on **Nodes** and you will see *No Node found*. That is because `Nodes` only appear in a shared nodes vCluster once a vCluster workload `Pod` is created in the vCluster and synced to the host cluster.
 
 > [!Note]
 > By default, the host nodes are not synced from the host cluster to the virtual cluster and are considered pseudo nodes. Pseudo nodes have real values for name, but everything else is randomly generated.
@@ -75,11 +75,14 @@ kubectl get all -n demo
 
 ### Syncing Resources From the Host Cluster
 
-vCluster can sync certain resources from the host cluster to make them available inside the virtual cluster, but when these resources are synced, they are only synced in read-only mode. No changes to the resource in the virtual cluster syncs back to the host cluster as the resources are shared across the host cluster. In this
+This lab exercise will explore syncing a `StorageClass` resourse from the shared host cluster into your *Shared Nodes vCluster*.
 
-1. Navigate to the the **Default Project Overview** page
+vCluster can sync certain resources from the host cluster to make them available inside the virtual cluster, but when these resources are synced, they are only synced in read-only mode. No changes to the resource in the virtual cluster syncs back to the host cluster as the resources are shared across the host cluster.
 
-We also want to sync `StorageClass` resources from the host cluster into the vCluster by updating the **vcluster.yaml** to match the following (this cannot be configured via the UI directly):
+1. Navigate to the **Default Project Overview** page and click on your *Shared Nodes vCluster*.
+2. Under **Inspect Resources** click on **More resources...**, search for *Storage Class* and select it from the results. You will see that there are no `StorageClass` resources in your *Shared Nodes vCluster*.
+3. Next, click on the **Config** menu item above **Inspect Resources** and under **Config Options**, scroll down to and expand the **Sync from Host** section. Note that this cannot be configured directly via the UI so you will need to add the configuration to the **vcluster.yaml** on the right.
+4. Add the `fromHost` config block from the configuration below to your existing **vcluster.yaml** configuration (or just replace the entire config):
 
 ```yaml
 sync:
@@ -99,12 +102,5 @@ controlPlane:
         enabled: true
 ```
 
-7. Inside the **Kubectl Shell: shared-nodes-vcluster** run the following `kubectl` command and you will see that the `local-path` `StorageClass` has been synced from the host cluster:
-
-```bash
-kubectl get storageclasses
-```
-
-
-
-Syncing resources is a distinct feature of the **Share Node** tenancy model.
+5. Click the **Save** button at the bottom-right of the page which will result in your *Shared Nodes vCluster* control plane restarting to load these config changes.
+6. Once your *Shared Nodes vCluster* is running, navigate back to the **Storage Class** listing under **Inspect Resources** and you will see a `StorageClass` resource named *local-path*.
