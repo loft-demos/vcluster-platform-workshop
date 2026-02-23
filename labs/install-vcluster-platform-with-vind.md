@@ -18,6 +18,14 @@ vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::User);
     ```
 
+  - Verify with the following to ensure you have `vcluster version 0.32.0`:
+
+    ```bash
+    vcluster version
+    ```
+
+  If you have another version, ensure that you update the vCluster CLI with the same method you originally installed it. Here are [some vCluster CLI installation examples](https://www.vcluster.com/docs/vcluster/#deploy-vcluster).
+
 2. Create `vcluster.yaml` file with the following content:
 
 ```yaml
