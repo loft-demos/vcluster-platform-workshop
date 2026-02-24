@@ -144,10 +144,29 @@ resource "kubernetes_pod_v1" "pod_node" {
       }
     }
 
-    volume { name = "run"            empty_dir {} }
-    volume { name = "var-containerd" empty_dir {} }
-    volume { name = "var-kubelet"    empty_dir {} }
-    volume { name = "var-vcluster"   empty_dir {} }
+    volume {
+      name = "run"
+      empty_dir {
+      }
+    }
+
+    volume {
+      name = "var-containerd"
+      empty_dir {
+      }
+    }
+
+    volume {
+      name = "var-kubelet"
+      empty_dir {
+      }
+    }
+
+    volume {
+      name = "var-vcluster"
+      empty_dir {
+      }
+    }
 
     volume {
       name = "user-data"
