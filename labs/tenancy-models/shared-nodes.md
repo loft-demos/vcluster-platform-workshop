@@ -114,16 +114,12 @@ This lab exercise walks you through syncing the CloudNativePG (CNPG) `Cluster` c
 CloudNativePG is an Operator that implements the Kubernetes controller pattern and creates additional resources (via `ownerReferences`), making it ideal for demonstrating bidirectional sync behavior.
 
 1. Navigate to the **Default Project Overview** page, hover over your *Shared Nodes vCluster* and then click the **Edit** button on the right.
-2. 
-
-Update **vcluster.yaml** configuration:
+2. Update the **vcluster.yaml** configuration to match the following:
 
 ```yaml
 sync:
   toHost:
     ingresses:
-      enabled: true
-    secrets:
       enabled: true
     customResources:
       clusters.postgresql.cnpg.io/v1:
@@ -147,26 +143,24 @@ controlPlane:
         enabled: true
 ```
 
-Create a cnpg `cluster` resoruce in your *Shared Nodes vCluster*.
+3. Click the **Save** button at the bottom-right of the page.
+4. Once the vCluster control plane has restarted, click on **Inspect Resources**.
+5. Under **Inspect Resources** click on **More resources...**, search for *Cluster* and select the `postgresql.cnpg.io/v1` `Cluster` resources. Because you configured the vCluster to sync `clusters.postgresql.cnpg.io/v1` it installed that CRD from the host cluster into your vCluster.
+6. Use the vCluster CLI to connect to your *Shared Nodes vCluster*:
 
-```yaml
+```bash
+vcluster platform connect vcluster shared-nodes-vcluster --project default
+```
+
+7. Create a `Cluster` resource along with a `Secret` for the `spec.superuserSecret` with the following command:
+
+```bash
+kubectl apply -f - <<'EOF'
 apiVersion: v1
 kind: Namespace
 metadata:
   name: cnpg-demo
 ---
-# App DB user (used by bootstrap.initdb)
-apiVersion: v1
-kind: Secret
-metadata:
-  name: app-secret
-  namespace: cnpg-demo
-type: kubernetes.io/basic-auth
-stringData:
-  username: app
-  password: app-password
----
-# Postgres superuser password (postgres)
 apiVersion: v1
 kind: Secret
 metadata:
@@ -184,7 +178,6 @@ metadata:
   namespace: cnpg-demo
 spec:
   instances: 1
-
   resources:
     requests:
       cpu: "250m"
@@ -192,26 +185,39 @@ spec:
     limits:
       cpu: "1"
       memory: "1Gi"
-
   superuserSecret:
     name: superuser-secret
-
   bootstrap:
     initdb:
       database: app
       owner: app
-
   storage:
     size: 1Gi
     storageClass: local-path
-
-  managed:
-    roles:
-      - name: reporting_user
-        login: true
+EOF
 ```
 
-See resources synced back into your *Shared Nodes vCluster*.
+8. To see the resources synced back into your *Shared Nodes vCluster* run:
+
+```bash
+kubectl get all -n cnpg-demo
+kubectl get pvc -n cnpg-demo
+```
+
+1. Disconnect from your *Shared Nodes vCluster*:
+
+```bash
+vcluster disconnect
+```
+
+10. Finally, run the following command to see that the `Cluster` resource synced to the host names was patched to point to the renamed `superuser-secret`:
+
+```bash
+kubectl get clusters.postgresql.cnpg.io  -n loft-default-v-shared-nodes-vcluster
+kubectl -n loft-default-v-shared-nodes-vcluster \
+  get clusters.postgresql.cnpg.io \
+  -o jsonpath='{range .items[*]}{.metadata.name}{" -> superuserSecret: "}{.spec.superuserSecret.name}{"\n"}{end}'
+```
 
 ## What's Next
 

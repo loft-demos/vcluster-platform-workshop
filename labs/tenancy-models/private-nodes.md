@@ -102,7 +102,7 @@ curl -fsSLk "https://<replace-with-your-vcp-host>/kubernetes/project/default/vir
 exit
 ```
 
-6. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to yourm*Private Nodes vCluster*.
+6. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to your *Private Nodes vCluster*.
 7. Click **Pods** and you will see that the they are either *Running* or starting.
 
 ### Deploy a Workload to Your *Private Nodes vCluster*
