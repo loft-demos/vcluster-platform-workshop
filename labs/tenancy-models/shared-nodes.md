@@ -56,8 +56,8 @@ controlPlane:
 > 
 > When you run `kubectl get nodes`, the only nodes that show up are the ones that have pods scheduled on them. Any information besides the name is randomly generated. If there are no more pods on that host node, vCluster deletes the pseudo node in the virtual cluster. [Learn more about host nodes for shared node virtual clusters](https://www.vcluster.com/docs/vcluster/deploy/worker-nodes/host-nodes/).
 
-1. In addition to the **Inspect Resources** view, vCluster Platform provides an integrated [**Kubectl Shell** feature](https://www.vcluster.com/docs/platform/use-platform/virtual-clusters/key-features/kubectl-shell). This launches a temporary, browser-based terminal connected to a `pod` inside the target vCluster using a scoped [`AccessKey`](https://www.vcluster.com/docs/platform/4.6.0/administer/authentication/access-keys), allowing you to run `kubectl` commands directly from the vCluster Platform UI. To open the **Kubectl Shell**, click the *More* options **⋮** menu next to the **Connect** button in the top-right corner, then select **Kubectl Shell**. A terminal will open at the bottom of the screen.
-2. Run the following `kubectl` command inside the **Kubectl Shell: shared-nodes-vcluster** terminal:
+7. In addition to the **Inspect Resources** view, vCluster Platform provides an integrated [**Kubectl Shell** feature](https://www.vcluster.com/docs/platform/use-platform/virtual-clusters/key-features/kubectl-shell). This launches a temporary, browser-based terminal connected to a `pod` inside the target vCluster using a scoped [`AccessKey`](https://www.vcluster.com/docs/platform/4.6.0/administer/authentication/access-keys), allowing you to run `kubectl` commands directly from the vCluster Platform UI. To open the **Kubectl Shell**, click the *More* options **⋮** menu next to the **Connect** button in the top-right corner, then select **Kubectl Shell**. A terminal will open at the bottom of the screen.
+8. Run the following `kubectl` command inside the **Kubectl Shell: shared-nodes-vcluster** terminal:
 
 ```bash
 kubectl get ns
@@ -66,7 +66,7 @@ kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-
 
 This will create a `Namespace` called `demo` inside of the vCluster and deploy the [podinfo](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) app into that `Namespace` - click [here](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) to see the applied Kubernetes manifests.
 
-1. Next, run the following commands to see that there is a new *demo* `Namespace` and that the *podinfo* app was deployed into that `Namespace`:
+9. Next, run the following commands to see that there is a new *demo* `Namespace` and that the *podinfo* app was deployed into that `Namespace`:
 
 ```bash
 kubectl get nodes --show-labels
