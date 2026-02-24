@@ -120,7 +120,7 @@ This lab exercise walks you through creating a virtual cluster from the Virtual 
 
     *0/3 nodes are available: 3 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling. (FailedScheduling)*
 
-    your `vcp-cluster` Standalone vCluster (the vCluster shared host cluster) needs a node with the correct label and taints for the pod to be scheduled.
+    Your `vcp-cluster` Standalone vCluster (the vCluster shared host cluster) needs a node with the correct label and taints for the pod to be scheduled.
 
 ### Create a Dedicated Node
 
