@@ -22,7 +22,7 @@ locals {
     var.extra_labels
   )
 
-  # Try common places a NodeClaim might carry resources. Fall back to defaults.
+  # Try common places a NodeClaim might carry resources; fall back to defaults.
   node_cpu = coalesce(
     try(var.vcluster.nodeClaim.spec.resources.cpu, null),
     try(var.vcluster.nodeClaim.spec.resources.requests.cpu, null),
@@ -37,13 +37,12 @@ locals {
     var.resources.limits.memory
   )
 
-  # Guaranteed QoS for workshop stability
+  # Workshop-friendly: Guaranteed QoS (requests == limits)
   req_cpu = local.node_cpu
   req_mem = local.node_mem
   lim_cpu = local.node_cpu
   lim_mem = local.node_mem
 
-  # OwnerRefs only if UID exists (avoids apply/validate issues if absent)
   owner_uid = try(var.vcluster.nodeClaim.metadata.uid, null)
 }
 
@@ -101,11 +100,8 @@ resource "kubernetes_pod_v1" "pod_node" {
   spec {
     termination_grace_period_seconds = var.termination_grace_period_seconds
 
-    # Only set node_selector when non-empty (null can be annoying in some provider versions)
-    dynamic "node_selector" {
-      for_each = length(var.node_selector) > 0 ? [1] : []
-      content  = var.node_selector
-    }
+    # Empty map is fine; avoid null here.
+    node_selector = var.node_selector
 
     dynamic "toleration" {
       for_each = var.tolerations

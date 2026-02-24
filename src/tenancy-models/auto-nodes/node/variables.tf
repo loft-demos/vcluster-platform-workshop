@@ -6,15 +6,14 @@ variable "vcluster" {
   description = <<EOT
 Object provided by the vCluster Platform Terraform Node Provider.
 
-Expected fields used by this module:
+Fields used by this module:
 - vcluster.namespace (string)
 - vcluster.userData (string)
 - vcluster.nodeClaim.apiVersion (string)
 - vcluster.nodeClaim.kind (string)
 - vcluster.nodeClaim.metadata.name (string)
-- vcluster.nodeClaim.metadata.uid (string, optional but recommended for ownerReferences)
+- vcluster.nodeClaim.metadata.uid (string, optional)
 EOT
-
   type = any
 }
 
@@ -23,13 +22,13 @@ EOT
 ############################
 
 variable "image" {
-  description = "Container image for the pod-node. Prefer a pinned tag or digest for repeatable workshops."
+  description = "Container image for the pod-node."
   type        = string
   default     = "ghcr.io/fabiankramm/pod-node:latest"
 }
 
 variable "image_pull_policy" {
-  description = "Image pull policy for workshop stability."
+  description = "Always | IfNotPresent | Never"
   type        = string
   default     = "IfNotPresent"
   validation {
@@ -39,31 +38,25 @@ variable "image_pull_policy" {
 }
 
 variable "termination_grace_period_seconds" {
-  description = "How quickly the pod-node terminates when deleted (workshop-friendly defaults to 1)."
+  description = "Workshop-friendly fast termination."
   type        = number
   default     = 1
 }
 
-variable "priority_class_name" {
-  description = "Optional priorityClassName for the pod."
-  type        = string
-  default     = ""
-}
-
 variable "extra_labels" {
-  description = "Additional labels to attach to the Secret and Pod."
+  description = "Extra labels for Pod and Secret."
   type        = map(string)
   default     = {}
 }
 
 variable "extra_annotations" {
-  description = "Additional annotations to attach to the Pod."
+  description = "Extra annotations for Pod."
   type        = map(string)
   default     = {}
 }
 
 variable "node_selector" {
-  description = "Optional nodeSelector to constrain where pod-nodes run."
+  description = "Optional nodeSelector."
   type        = map(string)
   default     = {}
 }
@@ -71,34 +64,23 @@ variable "node_selector" {
 variable "tolerations" {
   description = "Optional tolerations list."
   type = list(object({
-    key                = optional(string)
-    operator           = optional(string)
-    value              = optional(string)
-    effect             = optional(string)
-    toleration_seconds = optional(number)
+    key      = optional(string)
+    operator = optional(string)
+    value    = optional(string)
+    effect   = optional(string)
   }))
   default = []
 }
 
+# Fallback if NodeClaim doesn't provide cpu/memory
 variable "resources" {
-  description = "Resource requests/limits for the pod-node container."
   type = object({
-    requests = object({
-      cpu    = string
-      memory = string
-    })
     limits = object({
       cpu    = string
       memory = string
     })
   })
-
-  # Conservative defaults for workshops; adjust to your pod-node behavior.
   default = {
-    requests = {
-      cpu    = "500m"
-      memory = "1Gi"
-    }
     limits = {
       cpu    = "2"
       memory = "4Gi"
