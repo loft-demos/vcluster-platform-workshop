@@ -1,23 +1,4 @@
 ############################
-# Required input from vCluster Platform Node Provider
-############################
-
-variable "vcluster" {
-  description = <<EOT
-Object provided by the vCluster Platform Terraform Node Provider.
-
-Fields used by this module:
-- vcluster.namespace (string)
-- vcluster.userData (string)
-- vcluster.nodeClaim.apiVersion (string)
-- vcluster.nodeClaim.kind (string)
-- vcluster.nodeClaim.metadata.name (string)
-- vcluster.nodeClaim.metadata.uid (string, optional)
-EOT
-  type = any
-}
-
-############################
 # Demo/workshop knobs
 ############################
 
