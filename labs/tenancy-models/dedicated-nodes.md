@@ -21,7 +21,7 @@ In this lab you will:
 
 ### Create a **Dedicated Nodes**  Virtual Cluster Template
 
-This lab exercise walks you through creating a Virtual Cluster Template. A Virtual Cluster Templates is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata. Virtual Cluster Templates are backed by a vCluster Platform `VirtualClusterTemplate` custom resource. So although you can create a Virtual Cluster Template in the vCluster Platform UI you also create them via a Kubernetes manifest.
+This lab exercise walks you through creating a Virtual Cluster Template. A [Virtual Cluster Template](https://www.vcluster.com/docs/platform/understand/what-are-templates) is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata. Virtual Cluster Templates are backed by a vCluster Platform `VirtualClusterTemplate` custom resource. So although you can create a Virtual Cluster Template in the vCluster Platform UI you also create them via a Kubernetes manifest.
 
 1. Ensure you are connected to your `vcp-cluster` Standalone vCluster you created in *Install vCluster Platform Using vCluster in Docker (vind)*:
 
@@ -102,21 +102,31 @@ kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-
 
       Enforces a safe format: `team-a` but not `Team A`
 
-6. Now it is time to create a virtual cluster for the template. Click on the **Virtual Clusters** link in the top-left menu under **Default Project**, and then click on the **Create virtual cluster** button.
-7. Click the **Select Template** button for the **Dedicated Nodes** template.
-8. On the next screen, under **Config Options**:
+### Create a Dedicated Nodes Virtual Cluster with a Virtual Cluster Template
+
+This lab exercise walks you through creating a virtual cluster from the Virtual Cluster Template created in the previous exercise.
+
+1. Click on the **Virtual Clusters** link in the top-left menu under **Default Project**, and then click on the **Create virtual cluster** button.
+2. Click the **Select Template** button for the **Dedicated Nodes** template.
+3. On the next screen, under **Config Options**:
    - Enter *Dedicated Nodes vCluster* for the **Display Name**.
    - Enter *team-a* for the **vCluster Tenant ID** under **Parameters**.
-9. Next, click the **Create virtual cluster** button at the bottom right of the page.
-10. Once your *Dedicated Nodes vCluster* is up an running, click on the **Inspect Resources** button - under and to the right of the **Control Plane Pods Status** - and then click on **Deployments**.
-11. Click the **Create Deployment** button.
-12. Set the `namespace` of the `Deployment` manifest to `default` and click the **Create** button.
-13. Click on **Pods** under **Inspect Resources** and you will see a pod pending.
-14. Hover over the **Events** warning and you will see that `pod` cannot be scheduled because:
+4. Next, click the **Create virtual cluster** button at the bottom right of the page.
+5.  Once your *Dedicated Nodes vCluster* is up an running, click on the **Inspect Resources** button - under and to the right of the **Control Plane Pods Status** - and then click on **Deployments**.
+6.  Click the **Create Deployment** button.
+7.  Set the `namespace` of the `Deployment` manifest to `default` and click the **Create** button.
+8.  Click on **Pods** under **Inspect Resources** and you will see a pod pending.
+9.  Hover over the **Events** warning and you will see that `pod` cannot be scheduled because:
 
     *0/3 nodes are available: 3 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling. (FailedScheduling)*
 
-15. Now we will add a `node` to your `vcp-cluster` Standalone vCluster with the following command:
+    your `vcp-cluster` Standalone vCluster (the vCluster shared host cluster) needs a node with the correct label and taints for the pod to be scheduled.
+
+### Create a Dedicated Node
+
+This lab exercise walks you through creating a worker node for your `vcp-cluster` Standalone vCluster with a label and taint that enforce tenant-specific compute isolation.
+
+1.  Now we will add a `node` to your `vcp-cluster` Standalone vCluster with the following command:
 
 ```bash
 docker run -d --name vcluster.node.vcp-cluster.worker-3 \
@@ -130,27 +140,27 @@ docker run -d --name vcluster.node.vcp-cluster.worker-3 \
   ghcr.io/loft-sh/vm-container
 ```
 
-16. Next, get the join command for your `vcp-cluster` Standalone vCluster:
+2. Next, get the join command for your `vcp-cluster` Standalone vCluster:
 
 ```bash
 vcluster connect vcp-cluster --driver docker
 vcluster token create
 ```
 
-17. Exec into the `vcluster.node.vcp-cluster.worker-3 container`:
+3. Exec into the `vcluster.node.vcp-cluster.worker-3 container`:
 
 ```bash
 docker exec -it vcluster.node.vcp-cluster.worker-3 /bin/bash
 ```
 
-18. Run the join command in the `vcluster.node.vcp-cluster.worker-3 container` and then exit:
+4. Run the join command in the `vcluster.node.vcp-cluster.worker-3 container` and then exit:
 
 ```bash
 curl -fsSLk "https://<replace-with-your-ip>:8443/node/join?token=<replace-with-your-join-token>" | sh -
 exit
 ```
 
-19. Now we will label and taint the new node:
+5. Now we will label and taint the new node:
 
 ```bash
 kubectl get nodes
@@ -158,9 +168,9 @@ kubectl label node worker-3 tenant=team-a
 kubectl taint node worker-3 tenant=team-a:NoSchedule
 ```
 
-20. Return to the **Inspect Resources** view of your *Dedicated Nodes vCluster* and select **Pods** and see that the `pod` is now running.
-21. Click on the *More* options **⋮** menu of the `pod` and select **Show Yaml**. Search for `nodeSelector` and `key: tenant` and you will find that the node selector nor the toleration exist on workload `pods` in side the vCluster.
-22. Now click on the **loft-default-v-dedicated-nodes-vcluster** link at the top-middle of the vCluster Config page to view the host `namespace` where your *Dedicated Nodes vCluster* control plane `pod` is running and view the Yaml for the `deployment-*` `pod`. Search for `nodeSelector` and `key: tenant` and you will find that the node selector and toleration has been added to the synced `pod`.
+6. Return to the **Inspect Resources** view of your *Dedicated Nodes vCluster* and select **Pods** and see that the `pod` is now running.
+7. Click on the *More* options **⋮** menu of the `pod` and select **Show Yaml**. Search for `nodeSelector` and `key: tenant` and you will find that the node selector nor the toleration exist on workload `pods` in side the vCluster.
+8. Now click on the **loft-default-v-dedicated-nodes-vcluster** link at the top-middle of the vCluster Config page to view the host `namespace` where your *Dedicated Nodes vCluster* control plane `pod` is running and view the Yaml for the `deployment-*` `pod`. Search for `nodeSelector` and `key: tenant` and you will find that the node selector and toleration has been added to the synced `pod`.
 
 ## What's Next
 
