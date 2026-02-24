@@ -29,7 +29,7 @@ This lab exercise walks you through creating a Virtual Cluster Template. A [Virt
 vcluster connect vcp-cluster --driver docker
 ```
 
-2. Now apply the `VirtualClusterTemplate` Kubernetes manifest:
+2. Now apply the [`VirtualClusterTemplate` Kubernetes manifest](https://github.com/loft-demos/vcluster-platform-workshop/blob/main/src/tenancy-models/dedicated-nodes/virtual-cluster-template.yaml):
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/tenancy-models/dedicated-nodes/virtual-cluster-template.yaml
