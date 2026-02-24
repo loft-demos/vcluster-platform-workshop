@@ -42,8 +42,6 @@ locals {
   req_mem = local.node_mem
   lim_cpu = local.node_cpu
   lim_mem = local.node_mem
-
-  owner_uid = try(var.vcluster.nodeClaim.metadata.uid, null)
 }
 
 ############################
@@ -54,17 +52,6 @@ resource "kubernetes_secret_v1" "node" {
     name      = "${local.nodeclaim_name}-pod"
     namespace = local.vcluster_ns
     labels    = local.common_labels
-
-    dynamic "owner_references" {
-      for_each = local.owner_uid == null ? [] : [1]
-      content {
-        api_version = var.vcluster.nodeClaim.apiVersion
-        kind        = var.vcluster.nodeClaim.kind
-        name        = var.vcluster.nodeClaim.metadata.name
-        uid         = local.owner_uid
-        controller  = true
-      }
-    }
   }
 
   type = "Opaque"
@@ -85,17 +72,6 @@ resource "kubernetes_pod_v1" "pod_node" {
     labels    = local.common_labels
 
     annotations = var.extra_annotations
-
-    dynamic "owner_references" {
-      for_each = local.owner_uid == null ? [] : [1]
-      content {
-        api_version = var.vcluster.nodeClaim.apiVersion
-        kind        = var.vcluster.nodeClaim.kind
-        name        = var.vcluster.nodeClaim.metadata.name
-        uid         = local.owner_uid
-        controller  = true
-      }
-    }
   }
 
   spec {
