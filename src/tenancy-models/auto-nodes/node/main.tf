@@ -10,8 +10,19 @@ terraform {
 provider "kubernetes" {}
 
 locals {
-  # Try common places a NodeClaim might carry resources.
-  # If none exist, fall back to module defaults.
+  nodeclaim_name = var.vcluster.nodeClaim.metadata.name
+  vcluster_ns    = var.vcluster.namespace
+
+  common_labels = merge(
+    {
+      "app.kubernetes.io/name"     = "pod-node"
+      "app.kubernetes.io/part-of"  = "vcluster-auto-nodes"
+      "vcluster.loft.sh/nodeclaim" = local.nodeclaim_name
+    },
+    var.extra_labels
+  )
+
+  # Try common places a NodeClaim might carry resources. Fall back to defaults.
   node_cpu = coalesce(
     try(var.vcluster.nodeClaim.spec.resources.cpu, null),
     try(var.vcluster.nodeClaim.spec.resources.requests.cpu, null),
@@ -26,11 +37,14 @@ locals {
     var.resources.limits.memory
   )
 
-  # Workshop-friendly: Guaranteed QoS
+  # Guaranteed QoS for workshop stability
   req_cpu = local.node_cpu
   req_mem = local.node_mem
   lim_cpu = local.node_cpu
   lim_mem = local.node_mem
+
+  # OwnerRefs only if UID exists (avoids apply/validate issues if absent)
+  owner_uid = try(var.vcluster.nodeClaim.metadata.uid, null)
 }
 
 ############################
@@ -38,15 +52,24 @@ locals {
 ############################
 resource "kubernetes_secret_v1" "node" {
   metadata {
-    name            = "${local.nodeclaim_name}-pod"
-    namespace       = local.vcluster_ns
-    labels          = local.common_labels
-    owner_references = local.owner_ref
+    name      = "${local.nodeclaim_name}-pod"
+    namespace = local.vcluster_ns
+    labels    = local.common_labels
+
+    dynamic "owner_references" {
+      for_each = local.owner_uid == null ? [] : [1]
+      content {
+        api_version = var.vcluster.nodeClaim.apiVersion
+        kind        = var.vcluster.nodeClaim.kind
+        name        = var.vcluster.nodeClaim.metadata.name
+        uid         = local.owner_uid
+        controller  = true
+      }
+    }
   }
 
   type = "Opaque"
 
-  # Provider expects base64-ish semantics depending on resource; keep as you have it.
   data = {
     "user-data" = var.vcluster.userData
     "meta-data" = "{}"
@@ -58,20 +81,34 @@ resource "kubernetes_secret_v1" "node" {
 ############################
 resource "kubernetes_pod_v1" "pod_node" {
   metadata {
-    name            = local.nodeclaim_name
-    namespace       = local.vcluster_ns
-    labels          = local.common_labels
-    owner_references = local.owner_ref
+    name        = local.nodeclaim_name
+    namespace   = local.vcluster_ns
+    labels      = local.common_labels
+    annotations = var.extra_annotations
+
+    dynamic "owner_references" {
+      for_each = local.owner_uid == null ? [] : [1]
+      content {
+        api_version = var.vcluster.nodeClaim.apiVersion
+        kind        = var.vcluster.nodeClaim.kind
+        name        = var.vcluster.nodeClaim.metadata.name
+        uid         = local.owner_uid
+        controller  = true
+      }
+    }
   }
 
   spec {
     termination_grace_period_seconds = var.termination_grace_period_seconds
 
-    # Keep these "nodes" on specific hosts if desired
-    node_selector = try(var.node_selector, null)
+    # Only set node_selector when non-empty (null can be annoying in some provider versions)
+    dynamic "node_selector" {
+      for_each = length(var.node_selector) > 0 ? [1] : []
+      content  = var.node_selector
+    }
 
     dynamic "toleration" {
-      for_each = try(var.tolerations, [])
+      for_each = var.tolerations
       content {
         key      = try(toleration.value.key, null)
         operator = try(toleration.value.operator, null)
@@ -81,8 +118,8 @@ resource "kubernetes_pod_v1" "pod_node" {
     }
 
     container {
-      name             = "pod-node"
-      image            = var.image # ideally a digest
+      name              = "pod-node"
+      image             = var.image
       image_pull_policy = var.image_pull_policy
 
       security_context {
@@ -127,7 +164,6 @@ resource "kubernetes_pod_v1" "pod_node" {
   }
 
   lifecycle {
-    # Reduce churn if admission controllers add annotations, etc.
     ignore_changes = [
       metadata[0].annotations,
     ]
