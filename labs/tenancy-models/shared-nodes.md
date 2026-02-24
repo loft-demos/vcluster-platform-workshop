@@ -19,11 +19,15 @@ In this lab you will:
 
 This lab exercise walks you through creating a basic **Shared Nodes** virtual cluster using vCluster Platform and exploring how workloads are synced from the virtual cluster to the host cluster. You will deploy a sample application, observe pseudo nodes appearing inside the vCluster, and verify how resources like `Pods` and `Ingresses` are synchronized and scheduled onto shared host nodes.
 
-1. Navigate to your vCluster Platform domain in your browser and click on the **Virtual Clusters** link in the top-left menu under **Default Project**, and then click on the **Create virtual cluster** button.
+1. Navigate to your vCluster Platform domain in your browser and click on the **Virtual Clusters** link in the top-left menu under **Default Project**, and then click the **Create virtual cluster** button.
 2. Next, click **Deploy with vCluster Platform** and then click the **Continue without template** button (we will explore templates later in this workshop).
 3. On the next screen, under **Config Options**:
    - Enter *Shared Nodes vCluster* for the **Display Name**
-   - Under **Backing Store Type**, select *Embedded Etcd*. This option runs the `etcd` binary alongside the Kubernetes control plane inside the vCluster `syncer` container, providing a fully managed and highly available data store for the vCluster control plane.
+   - Under **Backing Store Type**, select *Embedded Etcd*. 
+
+> [!Note]
+> This option runs the `etcd` binary alongside the Kubernetes control plane inside the vCluster `syncer` container, providing a fully managed and highly available data store for the vCluster control plane.
+
 4. Note that the **vcluster.yaml** has been updated to reflect the changes made in the UI - in addition to the vCluster Platform default **vcluster.yaml** configuration that enabled syncing `Ingress` resources to the host cluster and enabled embedded CoreDNS that runs CoreDNS in the vCluster `syncer` container, which saves the resources of an additional CoreDNS pod:
 
 ```yaml
