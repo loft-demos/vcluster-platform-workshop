@@ -80,9 +80,10 @@ resource "kubernetes_secret_v1" "node" {
 ############################
 resource "kubernetes_pod_v1" "pod_node" {
   metadata {
-    name        = local.nodeclaim_name
-    namespace   = local.vcluster_ns
-    labels      = local.common_labels
+    name      = local.nodeclaim_name
+    namespace = local.vcluster_ns
+    labels    = local.common_labels
+
     annotations = var.extra_annotations
 
     dynamic "owner_references" {
@@ -133,10 +134,26 @@ resource "kubernetes_pod_v1" "pod_node" {
         }
       }
 
-      volume_mount { name = "run"            mount_path = "/run" }
-      volume_mount { name = "var-containerd" mount_path = "/var/lib/containerd" }
-      volume_mount { name = "var-kubelet"    mount_path = "/var/lib/kubelet" }
-      volume_mount { name = "var-vcluster"   mount_path = "/var/lib/vcluster" }
+      volume_mount {
+        name       = "run"
+        mount_path = "/run"
+      }
+
+      volume_mount {
+        name       = "var-containerd"
+        mount_path = "/var/lib/containerd"
+      }
+
+      volume_mount {
+        name       = "var-kubelet"
+        mount_path = "/var/lib/kubelet"
+      }
+
+      volume_mount {
+        name       = "var-vcluster"
+        mount_path = "/var/lib/vcluster"
+      }
+
       volume_mount {
         name       = "user-data"
         mount_path = "/var/lib/cloud/seed/nocloud"
@@ -172,8 +189,16 @@ resource "kubernetes_pod_v1" "pod_node" {
       name = "user-data"
       secret {
         secret_name = kubernetes_secret_v1.node.metadata[0].name
-        items { key = "user-data" path = "user-data" }
-        items { key = "meta-data" path = "meta-data" }
+
+        items {
+          key  = "user-data"
+          path = "user-data"
+        }
+
+        items {
+          key  = "meta-data"
+          path = "meta-data"
+        }
       }
     }
   }
