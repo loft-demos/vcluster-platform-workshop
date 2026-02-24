@@ -21,7 +21,7 @@ In this lab you will:
 
 ### Create a **Dedicated Nodes**  Virtual Cluster Template
 
-This lab exercise walks you through creating a Virtual Cluster Template. A [Virtual Cluster Template](https://www.vcluster.com/docs/platform/understand/what-are-templates) is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata. Virtual Cluster Templates are backed by a vCluster Platform `VirtualClusterTemplate` custom resource. So although you can create a Virtual Cluster Template in the vCluster Platform UI you also create them via a Kubernetes manifest.
+This lab exercise walks you through creating a Virtual Cluster Template. A [Virtual Cluster Template](https://www.vcluster.com/docs/platform/understand/what-are-templates) is a vCluster Platform custom resource that specifies how virtual clusters are provisioned - including control plane settings, synchronization behavior, and metadata. Virtual Cluster Templates are backed by the `VirtualClusterTemplate` Kubernetes custom resource, which means they can be created either through the vCluster Platform UI or declaratively via a Kubernetes manifest. This makes Virtual Cluster Templates — and all vCluster Platform resources — easy to manage using GitOps workflows.
 
 1. Ensure you are connected to your `vcp-cluster` Standalone vCluster you created in *Install vCluster Platform Using vCluster in Docker (vind)*:
 
