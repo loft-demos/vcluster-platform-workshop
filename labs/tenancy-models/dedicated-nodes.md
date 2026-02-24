@@ -115,8 +115,8 @@ This lab exercise walks you through creating a virtual cluster from the Virtual 
 5.  Once your *Dedicated Nodes vCluster* is up an running, click on the **Inspect Resources** button - under and to the right of the **Control Plane Pods Status** - and then click on **Deployments**.
 6.  Click the **Create Deployment** button.
 7.  Set the `namespace` of the `Deployment` manifest to `default` and click the **Create** button.
-8.  Click on **Pods** under **Inspect Resources** and you will see a pod pending.
-9.  Hover over the **Events** warning and you will see that `pod` cannot be scheduled because:
+8.  Click on **Pods** under **Inspect Resources** and you will see a `pod` pending.
+9.  Hover over the **Events** warning for the pending pod and you will see that `pod` cannot be scheduled because:
 
     *0/3 nodes are available: 3 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 3 Preemption is not helpful for scheduling. (FailedScheduling)*
 
