@@ -204,7 +204,7 @@ kubectl get all -n cnpg-demo
 kubectl get pvc -n cnpg-demo
 ```
 
-1. Disconnect from your *Shared Nodes vCluster*:
+9. Disconnect from your *Shared Nodes vCluster*:
 
 ```bash
 vcluster disconnect
