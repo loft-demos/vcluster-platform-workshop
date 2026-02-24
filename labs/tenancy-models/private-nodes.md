@@ -95,16 +95,18 @@ docker run -d \
 docker exec -it vcluster.node.private-nodes-vcluster.worker-1 bash
 ```
 
-> Then inside the `vm-container`:
+Then inside the `vm-container`:
 
 ```bash
-curl -fsSLk "https://<replace-with-your-vcp-host>/kubernetes/project/default/virtualcluster/private-nodes-vcluster/node/join?token=<replace-with-your-join-tokne>" | sh -
+curl -fsSLk "https://<replace-with-your-vcp-host>/kubernetes/project/default/virtualcluster/private-nodes-vcluster/node/join?token=<replace-with-your-join-token>" | sh -
 exit
 ```
 
-1. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to yourm*Private Nodes vCluster*.
-2. Click **Pods** and you will see that the they are either *Running* or starting.
+6. After the join script has completed setting up the worker node, return to the **Inspect Resources** view of your *Private Nodes vCluster* and select **Nodes**. You will see that you now have a worker node connected to yourm*Private Nodes vCluster*.
+7. Click **Pods** and you will see that the they are either *Running* or starting.
 
 ### Deploy a Workload to Your *Private Nodes vCluster*
 
 This lab exercise walks you through deploying a workload to your *Private Nodes vCluster* and explores how it is different than a workload deployed to your *Shared Nodes vCluster*.
+
+*Coming soon...*
