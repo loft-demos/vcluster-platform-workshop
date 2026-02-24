@@ -1,0 +1,54 @@
+apiVersion: management.loft.sh/v1
+kind: VirtualClusterTemplate
+metadata:
+  name: dedicated-nodes
+  annotations:
+    vcluster.com/template-icon: dedicated-node.svg
+spec:
+  displayName: Dedicated Nodes
+  owner:
+    user: admin
+  template:
+    metadata: {}
+    instanceTemplate:
+      metadata: {}
+    pro:
+      enabled: true
+    helmRelease:
+      chart:
+        version: 0.32.0
+      values: |
+        sync:
+          toHost:
+            pods:
+              enforceTolerations:
+                - "tenant={{.Values.tenantId }}:NoSchedule"
+            ingresses:
+              enabled: true
+          fromHost:
+            nodes:
+              # Do not sync real node information
+              enabled: false
+              # Select a set of nodes based on the node labels
+              selector:
+                labels:
+                  tenant: "{{.Values.tenantId }}"
+        controlPlane:
+          coredns:
+            enabled: true
+            embedded: true
+          backingStore:
+            etcd:
+              embedded:
+                enabled: true
+    accessPoint:
+      ingress: {}
+    spaceTemplate:
+      metadata: {}
+  parameters:
+    - variable: tenantId
+      label: vCluster Tenant ID
+      description: Sets the tenant id for selecting dedicated nodes.
+      type: string
+      required: true
+      validation: ^[a-z]+(?:-[a-z]+)*$
