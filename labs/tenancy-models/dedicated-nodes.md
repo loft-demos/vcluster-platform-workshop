@@ -1,8 +1,10 @@
 # Dedicated Nodes Tenancy Model
 
-In the **Dedicated Nodes** tenancy model, the vCluster control plane is still deployed as a `Pod` on the host cluster — just like with the **Shared Nodes** tenancy. However, each vCluster is configured with a Kubernetes `nodeSelector` (or affinity rules) that ensures all tenant workloads are scheduled only to nodes with specific labels. For example, a virtual cluster assigned to `nodegroup=tenant-a` will only run `pods` on `nodes `matching that label.
+In the **Dedicated Nodes** tenancy model, the vCluster control plane is deployed as a Pod on the host cluster — just like in the **Shared Nodes** tenancy model. The difference is that tenant workloads are restricted to a specific subset of host nodes.
 
-While compute is scoped to these dedicated `nodes,` all other components—like the CNI, CSI, and underlying Kubernetes host cluster—remain shared. The vCluster itself maintains full API isolation, separate CRDs, tenant-specific RBAC, and control plane security
+Workloads are directed to labeled nodes using node selectors or affinity rules, and true compute isolation is achieved by combining node taints with enforced tolerations. This ensures that tenant workloads both target the correct nodes and prevent other host workloads (and other synced vCluster workloads) from running there.
+
+While compute is isolated at the node level, the underlying Kubernetes control plane, CNI, CSI, and other cluster infrastructure components remain shared. The vCluster continues to provide API isolation, separate CRDs, tenant-specific RBAC, and control plane security boundaries.
 
 ![Dedicated Nodes Architecture](https://www.vcluster.com/docs/assets/images/dedicated-nodes-66b5934ba465de8cfa30aba0399b2fbd.png)
 
