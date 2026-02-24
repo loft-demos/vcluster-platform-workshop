@@ -17,7 +17,7 @@ In this lab you will:
 
 ### Create a Basic Shared Node Virtual Cluster
 
-This lab exercise walks you through creating a basic Shared Nodes virtual cluster using vCluster Platform and exploring how workloads are synced from the virtual cluster to the host cluster. You will deploy a sample application, observe pseudo nodes appearing inside the vCluster, and verify how resources like Pods and Ingresses are synchronized and scheduled onto shared host nodes.
+This lab exercise walks you through creating a basic **Shared Nodes** virtual cluster using vCluster Platform and exploring how workloads are synced from the virtual cluster to the host cluster. You will deploy a sample application, observe pseudo nodes appearing inside the vCluster, and verify how resources like `Pods` and `Ingresses` are synchronized and scheduled onto shared host nodes.
 
 1. Navigate to your vCluster Platform domain in your browser and click on the **Virtual Clusters** link in the top-left menu under **Default Project**, and then click on the **Create virtual cluster** button.
 2. Next, click **Deploy with vCluster Platform** and then click the **Continue without template** button (we will explore templates later in this workshop).
@@ -56,14 +56,13 @@ controlPlane:
 8. Run the following `kubectl` command inside the **Kubectl Shell: shared-nodes-vcluster** terminal:
 
 ```bash
-kubectl get nodes --show-labels
 kubectl get ns
 kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/podinfo-deploy.yaml
 ```
 
-This will create a `Namespace` called `demo` inside of the vCluster and deploy the [podinfo](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) app into that `Namespace` - click [here](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) to see the applied Kubernetes manifests. Also, the reason there is now a `node`
+This will create a `Namespace` called `demo` inside of the vCluster and deploy the [podinfo](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) app into that `Namespace` - click [here](https://github.com/stefanprodan/podinfo?tab=readme-ov-file#podinfo) to see the applied Kubernetes manifests.
 
-9. Next, run the following commands to see that there is a new *demo* `Namespace` and that the *podinfo* app was deployed into that `Namespace`:
+1. Next, run the following commands to see that there is a new *demo* `Namespace` and that the *podinfo* app was deployed into that `Namespace`:
 
 ```bash
 kubectl get nodes --show-labels
