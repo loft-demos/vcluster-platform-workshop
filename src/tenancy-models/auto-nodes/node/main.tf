@@ -13,13 +13,16 @@ locals {
   nodeclaim_name = var.vcluster.nodeClaim.metadata.name
   vcluster_ns    = var.vcluster.namespace
 
+  test_prop = try(var.vcluster.nodeClaim.spec.properties["test"], null)
+
   common_labels = merge(
     {
       "app.kubernetes.io/name"     = "pod-node"
       "app.kubernetes.io/part-of"  = "vcluster-auto-nodes"
       "vcluster.loft.sh/nodeclaim" = local.nodeclaim_name
     },
-    var.extra_labels
+    var.extra_labels,
+    local.test_prop != null ? { "test" = tostring(local.test_prop) } : {}
   )
 
   # Try common places a NodeClaim might carry resources; fall back to defaults.
