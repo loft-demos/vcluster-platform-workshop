@@ -25,8 +25,8 @@ locals {
     local.test_prop != null ? { "test" = tostring(local.test_prop) } : {}
   )
 
-  node_cpu = tostring(var.vcluster.nodeClaim.spec.nodeType.resources.cpu)
-  node_mem = tostring(var.vcluster.nodeClaim.spec.nodeType.resources.memory)
+  node_cpu = tostring(var.vcluster.nodeType.spec..resources.cpu)
+  node_mem = tostring(var.vcluster.nodeType.spec..resources.memory)
 
   # Workshop-friendly: Guaranteed QoS (requests == limits)
   req_cpu = local.node_cpu
