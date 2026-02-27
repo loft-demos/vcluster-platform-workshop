@@ -42,8 +42,7 @@ vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vclus
 > ⚠️ **Mac users are highly recommended to use OrbStack for this workshop.**  
 > The labs are tested primarily against OrbStack. Docker Desktop may work, but it is not the supported path for macOS.
 
-> ℹ️ The `vcluster` CLI and `vind` will be installed as part of the lab:  
-> **Install vCluster Platform Using vCluster in Docker (vind)**
+> ℹ️ The vCluster CLI and `vind` will be installed as part of the pre-workshop setup below.
 
 ### Pre-Workshop Setup
 
