@@ -2,5 +2,4 @@
 
 In the **Auto Nodes** tenancy model, the vCluster control plane can still deployed as a `Pod` on the host cluster — just like with the Shared Nodes tenancy - but it can also be deployed as a Standalone vCluster. However, in both cases, vCluster Platform is required to automatically provision and join workers nodes.
 
-
 In this workshop, “Auto Nodes” are implemented as privileged Pods that bootstrap a real kubelet + containerd inside the container, so the pod registers itself as a Kubernetes Node. Because kubelet is started via kubeadm and systemd, the most reliable way to control what the node reports as allocatable is to patch kubeadm’s generated kubelet args (/var/lib/kubelet/kubeadm-flags.env) rather than relying on extra environment files. We compute “reserved” CPU/memory from PODNODE_CPU/PODNODE_MEMORY and enable node allocatable enforcement (including the required *-reserved-cgroup flags) so scheduling and scale-up/scale-down behavior matches the requested node size.
