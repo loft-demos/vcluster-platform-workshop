@@ -26,7 +26,7 @@ vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside
   > [!IMPORTANT]
   > If you have another version of the vCluster CLI other than `0.33.0-alpha.0`, ensure that you update the vCluster CLI with the same method you originally installed it. Here are [some vCluster CLI installation examples](https://www.vcluster.com/docs/vcluster/#deploy-vcluster).
 
-1. Create `vcluster.yaml` file with the following content:
+2. Create `vcluster.yaml` file with the following content:
 
 ```yaml
 experimental:
