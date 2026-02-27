@@ -98,6 +98,16 @@ resource "kubernetes_pod_v1" "pod_node" {
       image             = var.image
       image_pull_policy = var.image_pull_policy
 
+      env {
+        name  = "PODNODE_CPU"
+        value = tostring(local.req_cpu)
+      }
+
+      env {
+        name  = "PODNODE_MEMORY"
+        value = tostring(local.req_mem)
+      }
+
       security_context {
         privileged = true
       }
