@@ -22,14 +22,28 @@ vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vclus
 
 ### Prerequisites
 
-- A Kubernetes cluster with administrator access (**using vind fulfills this prerequisite**)
-  - You can verify administrative privileges with: `kubectl auth can-i create clusterrole -A`
-- vCluster Platform must be installed into the cluster
-- Docker Desktop (or an alternative like [Orbstack](https://orbstack.dev) (recommended for Mac))
-- Minimum 2GB RAM and 2 CPU cores available to Docker
+- A Kubernetes cluster with administrator access  
+  > The workshop uses [**vCluster in Docker (`vind`)**](https://www.vcluster.com/docs/vcluster/deploy/control-plane/docker-container/basics), which will be installed during the setup lab and provides the required cluster automatically.
+
+- **Container Runtime (Required for `vind`)**
+  - **macOS users: Install [OrbStack](https://orbstack.dev/download) — required and strongly recommended.**  
+    OrbStack provides better performance, lower resource usage, and a smoother experience than Docker Desktop for this workshop.
+  - Other platforms: Docker Desktop or a compatible Docker Engine runtime
+
+- Minimum **4GB RAM and 4 CPU cores** available to your container runtime
 - Egress access from vCluster Platform pods to `https://admin.loft.sh/*` (HTTPS, port 443) for license retrieval and validation
-- `helm` installed: Helm **v3.10** is required for deploying the platform. Refer to the [Helm Installation Guide](https://helm.sh/docs/intro/install/) if you need to install it
-- `kubectl` installed: Kubernetes command-line tool for interacting with the cluster. See [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) for installation instructions
+- `helm` installed — **Helm v3.10+ required**  
+  See the [Helm Installation Guide](https://helm.sh/docs/intro/install/)
+- `kubectl` v1.35.0+ installed — Kubernetes CLI  
+  See [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+
+---
+
+> ⚠️ **Mac users are highly recommended to use OrbStack for this workshop.**  
+> The labs are tested primarily against OrbStack. Docker Desktop may work, but it is not the supported path for macOS.
+
+> ℹ️ The `vcluster` CLI and `vind` will be installed as part of the lab:  
+> **Install vCluster Platform Using vCluster in Docker (vind)**
 
 ### Pre-Workshop Setup
 
