@@ -100,12 +100,11 @@ resource "kubernetes_pod_v1" "pod_node" {
 
       env {
         name  = "PODNODE_CPU"
-        value = tostring(local.req_cpu)
+        value = local.node_cpu
       }
-
       env {
         name  = "PODNODE_MEMORY"
-        value = tostring(local.req_mem)
+        value = local.node_mem
       }
 
       security_context {
