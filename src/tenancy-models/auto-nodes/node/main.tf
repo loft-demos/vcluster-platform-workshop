@@ -25,20 +25,8 @@ locals {
     local.test_prop != null ? { "test" = tostring(local.test_prop) } : {}
   )
 
-  # Try common places a NodeClaim might carry resources; fall back to defaults.
-  node_cpu = coalesce(
-    try(var.vcluster.nodeClaim.spec.resources.cpu, null),
-    try(var.vcluster.nodeClaim.spec.resources.requests.cpu, null),
-    try(var.vcluster.nodeClaim.spec.nodeType.resources.cpu, null),
-    var.resources.limits.cpu
-  )
-
-  node_mem = coalesce(
-    try(var.vcluster.nodeClaim.spec.resources.memory, null),
-    try(var.vcluster.nodeClaim.spec.resources.requests.memory, null),
-    try(var.vcluster.nodeClaim.spec.nodeType.resources.memory, null),
-    var.resources.limits.memory
-  )
+  node_cpu = tostring(var.vcluster.nodeClaim.spec.nodeType.resources.cpu)
+  node_mem = tostring(var.vcluster.nodeClaim.spec.nodeType.resources.memory)
 
   # Workshop-friendly: Guaranteed QoS (requests == limits)
   req_cpu = local.node_cpu
