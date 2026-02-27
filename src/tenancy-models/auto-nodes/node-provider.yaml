@@ -1,0 +1,32 @@
+apiVersion: management.loft.sh/v1
+kind: NodeProvider
+metadata:
+  name: pod-auto-nodes
+spec:
+  terraform:
+    nodeTemplate:
+      git:
+        repository: https://github.com/loft-demos/vcluster-platform-workshop.git
+        subPath: src/tenancy-models/auto-nodes/node
+    nodeEnvironmentTemplate:
+      infrastructure:
+        git:
+          repository: https://github.com/loft-demos/vcluster-platform-workshop.git
+          subPath: src/tenancy-models/auto-nodes/environment/infrastructure
+    nodeTypes:
+      - resources:
+          cpu: '1'
+          memory: 2Gi
+        name: small
+        metadata: {}
+      - resources:
+          cpu: '2'
+          memory: 4Gi
+        name: medium
+        metadata: {}
+      - resources:
+          cpu: '4'
+          memory: 8Gi
+        name: large
+        metadata: {}
+  displayName: Pod Auto Nodes
