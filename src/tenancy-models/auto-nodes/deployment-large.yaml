@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: large
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: large
+  template:
+    metadata:
+      labels:
+        app: large
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: large
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: burn
+        image: busybox:1.36
+        command: ["sh","-c"]
+        args: ["while true; do :; done"]
+        resources:
+          requests:
+            cpu: "2200m"
+            memory: "64Mi"
+          limits:
+            cpu: "2200m"
+            memory: "64Mi"
