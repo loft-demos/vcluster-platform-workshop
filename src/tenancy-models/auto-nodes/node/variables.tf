@@ -5,7 +5,7 @@
 variable "image" {
   description = "Container image for the pod-node."
   type        = string
-  default     = "ghcr.io/loft-demos/pod-node:0.1.5"
+  default     = "ghcr.io/loft-demos/pod-node:0.1.6"
 }
 
 variable "image_pull_policy" {
