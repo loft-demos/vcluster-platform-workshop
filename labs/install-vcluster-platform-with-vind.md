@@ -2,31 +2,31 @@
 
 vCluster in Docker (vind) allows you to run a complete Kubernetes cluster inside Docker containers. This makes it possible to install and experiment with vCluster Platform on any machine that supports Docker — without requiring external cloud infrastructure.
 
-1. Install the vCluster CLI: 
+1. Install or upgrade the vCluster CLI: 
    - **Mac (Silicon/Arm):** 
 
     ```bash
-    curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/download/v0.32.0/vcluster-darwin-arm64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster
+    curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/download/v0.33.0-alpha.0/vcluster-darwin-arm64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster
     ```
 
    - **Windows Powershell:**
 
     ```bash
     md -Force "$Env:APPDATA\vcluster"; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]'Tls,Tls11,Tls12';
-    Invoke-WebRequest -URI "https://github.com/loft-sh/vcluster/releases/download/v0.32.0/vcluster-windows-amd64.exe" -o $Env:APPDATA\vcluster\vcluster.exe;
+    Invoke-WebRequest -URI "https://github.com/loft-sh/vcluster/releases/download/v0.33.0-alpha.0/vcluster-windows-amd64.exe" -o $Env:APPDATA\vcluster\vcluster.exe;
     $env:Path += ";" + $Env:APPDATA + "\vcluster";
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::User);
     ```
 
-  - Verify with the following to ensure you have `vcluster version 0.32.0`:
+  - Verify with the following to ensure you have `vcluster version 0.33.0-alpha.0`:
 
     ```bash
     vcluster version
     ```
+  > [!IMPORTANT]
+  > If you have another version of the vCluster CLI other than `0.33.0-alpha.0`, ensure that you update the vCluster CLI with the same method you originally installed it. Here are [some vCluster CLI installation examples](https://www.vcluster.com/docs/vcluster/#deploy-vcluster).
 
-  If you have another version, ensure that you update the vCluster CLI with the same method you originally installed it. Here are [some vCluster CLI installation examples](https://www.vcluster.com/docs/vcluster/#deploy-vcluster).
-
-2. Create `vcluster.yaml` file with the following content:
+1. Create `vcluster.yaml` file with the following content:
 
 ```yaml
 experimental:
