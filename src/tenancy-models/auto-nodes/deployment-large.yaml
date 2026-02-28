@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: large
+  name: large-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: large
+      app: large-app
   template:
     metadata:
       labels:
-        app: large
+        app: large-app
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app: large
+                  app: large-app
               topologyKey: kubernetes.io/hostname
       containers:
       - name: burn

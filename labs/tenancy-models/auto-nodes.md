@@ -4,8 +4,6 @@ In the **Auto Nodes** tenancy model, the vCluster control plane can still deploy
 
 In both cases, **vCluster Platform**** is required to automatically provision and join worker nodes using the Auto Nodes feature.
 
-In both cases, vCluster Platform is required to automatically provision and join worker nodes using the Auto Nodes feature.
-
 Auto Nodes allows platform teams to declaratively provision compute on demand. Instead of manually creating infrastructure and joining nodes, you define:
 - A NodeProvider – how infrastructure is created
 - A NodeType – what size/class of infrastructure to create

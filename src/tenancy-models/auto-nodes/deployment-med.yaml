@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: medium
+  name: medium-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: medium
+      app: medium-app
   template:
     metadata:
       labels:
-        app: medium
+        app: medium-app
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app: medium
+                  app: medium-app
               topologyKey: kubernetes.io/hostname
       containers:
       - name: burn

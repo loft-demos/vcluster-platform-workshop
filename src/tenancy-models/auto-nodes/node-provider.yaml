@@ -24,7 +24,7 @@ spec:
           cpu: '2'
           memory: 4Gi
           pods: 20
-        name: medium
+        name: medium-app
         metadata: {}
       - resources:
           cpu: '4'
