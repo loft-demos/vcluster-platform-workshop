@@ -17,16 +17,19 @@ spec:
       - resources:
           cpu: '1'
           memory: 2Gi
+          pods: 10
         name: small
         metadata: {}
       - resources:
           cpu: '2'
           memory: 4Gi
+          pods: 20
         name: medium
         metadata: {}
       - resources:
           cpu: '4'
           memory: 8Gi
+          pods: 30
         name: large
         metadata: {}
   displayName: Pod Auto Nodes

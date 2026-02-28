@@ -27,6 +27,7 @@ locals {
 
   node_cpu = tostring(var.vcluster.nodeType.spec.resources.cpu)
   node_mem = tostring(var.vcluster.nodeType.spec.resources.memory)
+  node_pods = tostring(var.vcluster.nodeType.spec.resources.pods)
 
   # Workshop-friendly: Guaranteed QoS (requests == limits)
   req_cpu = local.node_cpu
@@ -93,6 +94,10 @@ resource "kubernetes_pod_v1" "pod_node" {
       env {
         name  = "PODNODE_MEMORY"
         value = local.node_mem
+      }
+      env {
+        name  = "PODNODE_PODS"
+        value = local.node_pods
       }
 
       security_context {
