@@ -144,6 +144,8 @@ main() {
   install_vcluster
   ensure_cluster
   kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
+  mkdir -p /root/lab/assets
+  cp -a killercoda/shared-nodes/assets/. /root/lab/assets/ 2>/dev/null || true
   log "Bootstrap complete. Next step in intro: run 'vcluster platform start'."
 }
 
