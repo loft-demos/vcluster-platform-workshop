@@ -17,15 +17,16 @@ locals {
   kubernetes_version = try(var.vcluster.kubeVersion, "v1.35.0")
   debug_k8s_version = try(var.vcluster.kubeVersion, "missing")
   debug_vcluster_keys = join(",", sort(keys(var.vcluster)))
-  user_data_with_prepull = regexreplace(
-    var.vcluster.userData,
-    "(?m)^runcmd:\\s*$",
-    <<-EOT
+  pre_pull_runcmd = <<-EOT
 runcmd:
   - ctr -n k8s.io images pull registry.k8s.io/pause:3.10
   - ctr -n k8s.io images pull registry.k8s.io/kube-proxy:${local.kubernetes_version}
 EOT
-  )
+  user_data_with_prepull = length(split("runcmd:\n", var.vcluster.userData)) > 1 ? replace(
+    var.vcluster.userData,
+    "runcmd:\n",
+    "${local.pre_pull_runcmd}\n"
+  ) : "${trimspace(var.vcluster.userData)}\n${local.pre_pull_runcmd}"
 
   common_labels = merge(
     {
