@@ -18,7 +18,7 @@ To complete the labs in this workshop, you will need access to a Kubernetes envi
 
 vCluster Platform must be installed into a Kubernetes cluster. The easiest way to get started locally is by using [vCluster-in-Docker (vind)](https://github.com/loft-sh/vind).
 
-vind allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vcluster/deploy/control-plane/binary/) inside container-based VMs, providing a fully functional Kubernetes cluster where you can install and experiment with vCluster Platform.
+**vind** allows you to run [vCluster Standalone](https://www.vcluster.com/docs/vcluster/deploy/control-plane/binary/) inside container-based VMs, providing a fully functional Kubernetes cluster where you can install and experiment with vCluster Platform.
 
 ### Prerequisites
 
