@@ -6,13 +6,19 @@ This scenario bootstraps:
 
 ## 1) Validate bootstrap
 
-`vcluster connect vcp-cluster --driver docker`{{exec}}
+`vcluster connect vcp-cluster --driver docker || (vcluster create vcp-cluster --driver docker && vcluster connect vcp-cluster --driver docker)`{{exec}}
 `kubectl get nodes`{{exec}}
 `kubectl get ns vcluster-platform`{{exec}}
 
 ## 2) Install vCluster Platform (reduced footprint)
 
-`vcluster platform start --values https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/killercoda/shared-nodes/assets/vcp-values.yaml`{{exec}}
+First copy the vcp-values.yaml to a local directory:
+
+`curl -fsSL https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/killercoda/shared-nodes/assets/vcp-values.yaml -o /tmp/vcp-values.yaml`{{exec}}
+
+Then use the vCluster CLI to install vCluster Platform:
+
+`vcluster platform start --values /tmp/vcp-values.yaml`{{exec}}
 
 This prints the hosted vCluster Platform URL and bootstrap username/password.
 

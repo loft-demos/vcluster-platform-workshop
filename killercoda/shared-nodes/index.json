@@ -1,6 +1,6 @@
 {
   "title": "vCluster Platform: Shared Nodes",
-  "description": "Bootstrap vind + vCluster Platform and run the Shared Nodes workshop flow.",
+  "description": "Bootstrap vCluster Platform on a pre-provisioned Kubernetes cluster and run the Shared Nodes workshop flow.",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -33,6 +33,6 @@
     }
   },
   "backend": {
-    "imageid": "ubuntu-4GB"
+    "imageid": "kubernetes-kubeadm-2nodes"
   }
 }

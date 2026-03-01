@@ -10,9 +10,6 @@ KUBECTL_VERSION="${KUBECTL_VERSION:-stable}"
 HELM_VERSION="${HELM_VERSION:-v3.15.4}"
 VCLUSTER_VERSION="${VCLUSTER_VERSION:-v0.33.0-alpha.0}"
 
-VIND_CLUSTER_NAME="${VIND_CLUSTER_NAME:-vcp-cluster}"
-VIND_NAMESPACE="${VIND_NAMESPACE:-}"
-
 ENABLE_DOCKER_CONTAINERD="${ENABLE_DOCKER_CONTAINERD:-0}"
 
 #######################################
@@ -117,25 +114,9 @@ install_vcluster() {
 }
 
 #######################################
-# Ensure a Kubernetes cluster exists via vind
+# Wait for the pre-provisioned Kubernetes cluster
 #######################################
 ensure_cluster() {
-  select_cluster_context
-
-  log "Checking cluster reachability..."
-  if kubectl get nodes >/dev/null 2>&1; then
-    log "Cluster already reachable."
-  else
-    log "Creating vind cluster: ${VIND_CLUSTER_NAME}"
-    local extra=()
-    if [ -n "${VIND_NAMESPACE}" ]; then
-      extra+=(--namespace "${VIND_NAMESPACE}")
-    fi
-
-    vcluster create "${VIND_CLUSTER_NAME}" --driver docker "${extra[@]}"
-    select_cluster_context
-  fi
-
   log "Waiting for Kubernetes API to respond..."
   for _ in $(seq 1 60); do
     if kubectl get nodes >/dev/null 2>&1; then
@@ -145,21 +126,13 @@ ensure_cluster() {
   done
 
   if ! kubectl get nodes >/dev/null 2>&1; then
-    log "Kubernetes API still unreachable. If needed, run: vcluster connect ${VIND_CLUSTER_NAME} --driver docker"
+    log "Kubernetes API still unreachable."
     return 1
   fi
 
   log "Waiting for cluster nodes to become Ready..."
   kubectl wait --for=condition=Ready nodes --all --timeout=300s
   kubectl get nodes
-}
-
-select_cluster_context() {
-  local ctx
-  ctx="$(kubectl config get-contexts -o name 2>/dev/null | grep -m1 "${VIND_CLUSTER_NAME}" || true)"
-  if [ -n "${ctx}" ]; then
-    kubectl config use-context "${ctx}" >/dev/null 2>&1 || true
-  fi
 }
 
 main() {
@@ -170,11 +143,6 @@ main() {
   install_vcluster
   ensure_cluster
   kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
-  mkdir -p /root/lab /root/lab/assets
-  if [ ! -d /root/lab/vcluster-platform-workshop/.git ]; then
-    git clone --depth 1 https://github.com/loft-demos/vcluster-platform-workshop.git /root/lab/vcluster-platform-workshop
-  fi
-  cp -a /root/lab/vcluster-platform-workshop/killercoda/shared-nodes/assets/. /root/lab/assets/
   log "Bootstrap complete. Next step in intro: run 'vcluster platform start'."
 }
 
