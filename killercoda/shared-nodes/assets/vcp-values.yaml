@@ -1,0 +1,5 @@
+config:
+  costControl:
+    enabled: false
+  imageBuilder:
+    enabled: false

@@ -6,8 +6,9 @@ Confirm the environment is ready:
 
 If verification fails, inspect setup logs:
 
-`tail -n 200 /tmp/loft-portforward.log`{{exec}}
+`bash killercoda/shared-nodes/setup.sh`{{exec}}
 
 Open vCluster Platform:
 
-- Use the KILLERCODA port UI for port `8080`.
+- Run the install command from the intro page:
+- `vcluster platform start --values /tmp/vcp-values.yaml`{{exec}}

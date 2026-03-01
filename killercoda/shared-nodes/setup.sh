@@ -5,10 +5,6 @@ set -euo pipefail
 # Config (override via env vars)
 #######################################
 PLATFORM_NAMESPACE="${PLATFORM_NAMESPACE:-vcluster-platform}"
-RELEASE_NAME="${RELEASE_NAME:-loft}"
-LOFT_CHART_REPO_NAME="${LOFT_CHART_REPO_NAME:-loft}"
-LOFT_CHART_REPO_URL="${LOFT_CHART_REPO_URL:-https://charts.loft.sh}"
-LOFT_CHART_NAME="${LOFT_CHART_NAME:-loft}"
 
 KUBECTL_VERSION="${KUBECTL_VERSION:-stable}"
 HELM_VERSION="${HELM_VERSION:-v3.15.4}"
@@ -17,11 +13,6 @@ VCLUSTER_VERSION="${VCLUSTER_VERSION:-v0.32.0}"
 VIND_CLUSTER_NAME="${VIND_CLUSTER_NAME:-vcp-cluster}"
 VIND_NAMESPACE="${VIND_NAMESPACE:-}"
 
-UI_LOCAL_PORT="${UI_LOCAL_PORT:-8080}"
-UI_REMOTE_PORT="${UI_REMOTE_PORT:-80}"
-
-LOFT_LICENSE="${LOFT_LICENSE:-}"
-LOFT_HOST="${LOFT_HOST:-}"
 ENABLE_DOCKER_CONTAINERD="${ENABLE_DOCKER_CONTAINERD:-0}"
 
 #######################################
@@ -145,41 +136,6 @@ ensure_cluster() {
   kubectl get nodes
 }
 
-#######################################
-# Install vCluster Platform
-#######################################
-install_vcp() {
-  log "Installing vCluster Platform in namespace '${PLATFORM_NAMESPACE}'..."
-  kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
-
-  helm repo add "${LOFT_CHART_REPO_NAME}" "${LOFT_CHART_REPO_URL}" >/dev/null 2>&1 || true
-  helm repo update >/dev/null 2>&1 || true
-
-  local args=()
-  args+=(--namespace "${PLATFORM_NAMESPACE}")
-  args+=(--create-namespace)
-  if [ -n "${LOFT_LICENSE}" ]; then
-    args+=(--set "licenseKey=${LOFT_LICENSE}")
-  fi
-  if [ -n "${LOFT_HOST}" ]; then
-    args+=(--set "config.loftHost=${LOFT_HOST}")
-  fi
-
-  helm upgrade --install "${RELEASE_NAME}" "${LOFT_CHART_REPO_NAME}/${LOFT_CHART_NAME}" "${args[@]}"
-  kubectl -n "${PLATFORM_NAMESPACE}" wait --for=condition=Available "deployment/${RELEASE_NAME}" --timeout=300s
-}
-
-#######################################
-# Port-forward UI
-#######################################
-start_port_forward() {
-  log "Starting port-forward localhost:${UI_LOCAL_PORT} -> svc/${RELEASE_NAME}:${UI_REMOTE_PORT}"
-  pkill -f "kubectl .*port-forward .*svc/${RELEASE_NAME} ${UI_LOCAL_PORT}:${UI_REMOTE_PORT}" >/dev/null 2>&1 || true
-
-  nohup kubectl -n "${PLATFORM_NAMESPACE}" port-forward "svc/${RELEASE_NAME}" "${UI_LOCAL_PORT}:${UI_REMOTE_PORT}" \
-    >/tmp/loft-portforward.log 2>&1 &
-}
-
 main() {
   log "Bootstrap starting..."
   enable_docker_containerd_store
@@ -187,9 +143,8 @@ main() {
   install_helm
   install_vcluster
   ensure_cluster
-  install_vcp
-  start_port_forward
-  log "Bootstrap complete. UI: http://127.0.0.1:${UI_LOCAL_PORT}"
+  kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
+  log "Bootstrap complete. Next step in intro: run 'vcluster platform start'."
 }
 
 main "$@"

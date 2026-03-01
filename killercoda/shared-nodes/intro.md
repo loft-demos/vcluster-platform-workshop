@@ -2,24 +2,25 @@
 
 This scenario bootstraps:
 - a `vind` Docker-backed cluster (`vcp-cluster`)
-- vCluster Platform (`loft` in `vcluster-platform`)
-- local UI port-forward on `http://127.0.0.1:8080`
+- required CLIs (`kubectl`, `helm`, `vcluster`)
 
-## 1) Wait for bootstrap completion
-
-`tail -f /tmp/loft-portforward.log`{{exec}}
-
-In a second terminal, validate readiness:
+## 1) Validate bootstrap
 
 `bash killercoda/shared-nodes/verify.sh`{{exec}}
 
-## 2) Open vCluster Platform UI
+## 2) Install vCluster Platform (reduced footprint)
 
-Use the Killercoda port UI for port `8080` (or open `http://127.0.0.1:8080` if local browser access is available).
+`vcluster platform start --values killercoda/shared-nodes/assets/vcp-values.yaml`{{exec}}
 
-## 3) Run the Shared Nodes lab flow
+This prints the hosted vCluster Platform URL and bootstrap username/password.
 
-Use the existing workshop lab content:
+## 3) Open vCluster Platform UI
+
+Open the `https://<random>.loft.host` URL printed by the previous command in a new browser tab.
+
+## 4) Run the Shared Nodes lab flow
+
+Use this workshop lab content:
 
 - `labs/tenancy-models/shared-nodes.md`
 
@@ -32,5 +33,6 @@ Skip optional heavy sections if time is limited.
 
 ## Notes
 
-- This scenario intentionally does not install ingress-nginx.
-- This scenario intentionally does not install CNPG by default.
+- This scenario does not use local port-forward by default.
+- This scenario does not install ingress-nginx.
+- CNPG is optional and may exceed time/resource limits in free sessions.
