@@ -14,8 +14,18 @@ locals {
   vcluster_ns    = var.vcluster.namespace
 
   test_prop = try(var.vcluster.nodeClaim.spec.properties["test"], null)
-  debug_k8s_version = try(var.vcluster.kubernetes.version, "missing")
+  kubernetes_version = try(var.vcluster.kubeVersion, "v1.35.0")
+  debug_k8s_version = try(var.vcluster.kubeVersion, "missing")
   debug_vcluster_keys = join(",", sort(keys(var.vcluster)))
+  user_data_with_prepull = regexreplace(
+    var.vcluster.userData,
+    "(?m)^runcmd:\\s*$",
+    <<-EOT
+runcmd:
+  - ctr -n k8s.io images pull registry.k8s.io/pause:3.10
+  - ctr -n k8s.io images pull registry.k8s.io/kube-proxy:${local.kubernetes_version}
+EOT
+  )
 
   common_labels = merge(
     {
@@ -51,7 +61,7 @@ resource "kubernetes_secret_v1" "node" {
   type = "Opaque"
 
   data = {
-    "user-data" = var.vcluster.userData
+    "user-data" = local.user_data_with_prepull
     "meta-data" = "{}"
   }
 }
