@@ -30,7 +30,7 @@
     ],
     "finish": {
       "text": "finish.md"
-    },
+    }
   },
   "backend": {
     "imageid": "ubuntu-4GB"
