@@ -14,6 +14,8 @@ locals {
   vcluster_ns    = var.vcluster.namespace
 
   test_prop = try(var.vcluster.nodeClaim.spec.properties["test"], null)
+  debug_k8s_version = try(var.vcluster.kubernetes.version, "missing")
+  debug_vcluster_keys = join(",", sort(keys(var.vcluster)))
 
   common_labels = merge(
     {
@@ -63,7 +65,10 @@ resource "kubernetes_pod_v1" "pod_node" {
     namespace = local.vcluster_ns
     labels    = local.common_labels
 
-    annotations = var.extra_annotations
+    annotations = merge(var.extra_annotations, {
+      "debug.loft.sh/k8s-version"  = local.debug_k8s_version
+      "debug.loft.sh/vcluster-keys" = local.debug_vcluster_keys
+    })
   }
 
   spec {
@@ -98,6 +103,14 @@ resource "kubernetes_pod_v1" "pod_node" {
       env {
         name  = "PODNODE_PODS"
         value = local.node_pods
+      }
+      env {
+        name  = "DEBUG_K8S_VERSION"
+        value = local.debug_k8s_version
+      }
+      env {
+        name  = "DEBUG_VCLUSTER_KEYS"
+        value = local.debug_vcluster_keys
       }
 
       security_context {
@@ -189,27 +202,4 @@ resource "kubernetes_pod_v1" "pod_node" {
       metadata[0].annotations,
     ]
   }
-}
-
-############################
-# Debug outputs (temporary)
-############################
-output "debug_vcluster_keys" {
-  value     = keys(var.vcluster)
-  sensitive = true
-}
-
-output "debug_vcluster_json" {
-  value     = jsonencode(var.vcluster)
-  sensitive = true
-}
-
-output "debug_kubernetes_version" {
-  value     = try(var.vcluster.kubernetes.version, null)
-  sensitive = true
-}
-
-output "debug_nodeclaim_properties" {
-  value     = try(var.vcluster.nodeClaim.spec.properties, {})
-  sensitive = true
 }
