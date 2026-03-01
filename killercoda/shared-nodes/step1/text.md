@@ -2,11 +2,12 @@
 
 Confirm the environment is ready:
 
-`bash killercoda/shared-nodes/verify.sh`{{exec}}
+`kubectl get nodes`{{exec}}
+`kubectl get ns vcluster-platform`{{exec}}
 
 If verification fails, inspect setup logs:
 
-`bash killercoda/shared-nodes/setup.sh`{{exec}}
+`kubectl get pods -A`{{exec}}
 
 Open vCluster Platform:
 

@@ -144,8 +144,11 @@ main() {
   install_vcluster
   ensure_cluster
   kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
-  mkdir -p /root/lab/assets
-  cp -a killercoda/shared-nodes/assets/. /root/lab/assets/ 2>/dev/null || true
+  mkdir -p /root/lab /root/lab/assets
+  if [ ! -d /root/lab/vcluster-platform-workshop/.git ]; then
+    git clone --depth 1 https://github.com/loft-demos/vcluster-platform-workshop.git /root/lab/vcluster-platform-workshop
+  fi
+  cp -a /root/lab/vcluster-platform-workshop/killercoda/shared-nodes/assets/. /root/lab/assets/
   log "Bootstrap complete. Next step in intro: run 'vcluster platform start'."
 }
 

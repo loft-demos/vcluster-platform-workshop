@@ -6,7 +6,8 @@ This scenario bootstraps:
 
 ## 1) Validate bootstrap
 
-`bash killercoda/shared-nodes/verify.sh`{{exec}}
+`kubectl get nodes`{{exec}}
+`kubectl get ns vcluster-platform`{{exec}}
 
 ## 2) Install vCluster Platform (reduced footprint)
 
