@@ -120,20 +120,46 @@ install_vcluster() {
 # Ensure a Kubernetes cluster exists via vind
 #######################################
 ensure_cluster() {
+  select_cluster_context
+
   log "Checking cluster reachability..."
   if kubectl get nodes >/dev/null 2>&1; then
     log "Cluster already reachable."
-    return 0
+  else
+    log "Creating vind cluster: ${VIND_CLUSTER_NAME}"
+    local extra=()
+    if [ -n "${VIND_NAMESPACE}" ]; then
+      extra+=(--namespace "${VIND_NAMESPACE}")
+    fi
+
+    vcluster create "${VIND_CLUSTER_NAME}" --driver docker "${extra[@]}"
+    select_cluster_context
   fi
 
-  log "Creating vind cluster: ${VIND_CLUSTER_NAME}"
-  local extra=()
-  if [ -n "${VIND_NAMESPACE}" ]; then
-    extra+=(--namespace "${VIND_NAMESPACE}")
+  log "Waiting for Kubernetes API to respond..."
+  for _ in $(seq 1 60); do
+    if kubectl get nodes >/dev/null 2>&1; then
+      break
+    fi
+    sleep 2
+  done
+
+  if ! kubectl get nodes >/dev/null 2>&1; then
+    log "Kubernetes API still unreachable. If needed, run: vcluster connect ${VIND_CLUSTER_NAME} --driver docker"
+    return 1
   fi
 
-  vcluster create "${VIND_CLUSTER_NAME}" --driver docker "${extra[@]}"
+  log "Waiting for cluster nodes to become Ready..."
+  kubectl wait --for=condition=Ready nodes --all --timeout=300s
   kubectl get nodes
+}
+
+select_cluster_context() {
+  local ctx
+  ctx="$(kubectl config get-contexts -o name 2>/dev/null | grep -m1 "${VIND_CLUSTER_NAME}" || true)"
+  if [ -n "${ctx}" ]; then
+    kubectl config use-context "${ctx}" >/dev/null 2>&1 || true
+  fi
 }
 
 main() {

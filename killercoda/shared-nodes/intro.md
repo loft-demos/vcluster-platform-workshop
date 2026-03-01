@@ -6,6 +6,7 @@ This scenario bootstraps:
 
 ## 1) Validate bootstrap
 
+`vcluster connect vcp-cluster --driver docker`{{exec}}
 `kubectl get nodes`{{exec}}
 `kubectl get ns vcluster-platform`{{exec}}
 
