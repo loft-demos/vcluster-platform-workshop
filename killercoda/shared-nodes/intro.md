@@ -7,15 +7,11 @@ This scenario bootstraps:
 
 ## 1) Wait for bootstrap completion
 
-```bash
-tail -f /tmp/loft-portforward.log
-```
+`tail -f /tmp/loft-portforward.log`{{exec}}
 
 In a second terminal, validate readiness:
 
-```bash
-bash killercoda/shared-nodes/verify.sh
-```
+`bash killercoda/shared-nodes/verify.sh`{{exec}}
 
 ## 2) Open vCluster Platform UI
 

@@ -1,17 +1,38 @@
 {
   "title": "vCluster Platform: Shared Nodes",
   "description": "Bootstrap vind + vCluster Platform and run the Shared Nodes workshop flow.",
-  "difficulty": "intermediate",
-  "time": "45 minutes",
   "details": {
     "intro": {
-      "text": "intro.md"
+      "text": "intro.md",
+      "background": "setup.sh"
     },
+    "steps": [
+      {
+        "title": "Validate Bootstrap",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Create Shared Nodes vCluster",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Deploy Workload",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      },
+      {
+        "title": "Verify Host Sync",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      }
+    ],
     "finish": {
       "text": "finish.md"
-    }
+    },
   },
   "backend": {
-    "imageid": "ubuntu"
+    "imageid": "ubuntu-4GB"
   }
 }
