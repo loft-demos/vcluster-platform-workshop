@@ -17,6 +17,8 @@ locals {
   kubernetes_version = try(var.vcluster.kubeVersion, "v1.35.0")
   debug_k8s_version = try(var.vcluster.kubeVersion, "missing")
   debug_vcluster_keys = join(",", sort(keys(var.vcluster)))
+  debug_instance_keys = join(",", sort(keys(try(var.vcluster.instance, {}))))
+  debug_properties_keys = join(",", sort(keys(try(var.vcluster.properties, {}))))
   pre_pull_runcmd = <<-EOT
 runcmd:
   - ctr -n k8s.io images pull registry.k8s.io/pause:3.10
@@ -79,6 +81,8 @@ resource "kubernetes_pod_v1" "pod_node" {
     annotations = merge(var.extra_annotations, {
       "debug.loft.sh/k8s-version"  = local.debug_k8s_version
       "debug.loft.sh/vcluster-keys" = local.debug_vcluster_keys
+      "debug.loft.sh/instance-keys" = local.debug_instance_keys
+      "debug.loft.sh/properties-keys" = local.debug_properties_keys
     })
   }
 
@@ -122,6 +126,14 @@ resource "kubernetes_pod_v1" "pod_node" {
       env {
         name  = "DEBUG_VCLUSTER_KEYS"
         value = local.debug_vcluster_keys
+      }
+      env {
+        name  = "DEBUG_INSTANCE_KEYS"
+        value = local.debug_instance_keys
+      }
+      env {
+        name  = "DEBUG_PROPERTIES_KEYS"
+        value = local.debug_properties_keys
       }
 
       security_context {
