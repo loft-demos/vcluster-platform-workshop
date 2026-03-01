@@ -195,7 +195,8 @@ resource "kubernetes_pod_v1" "pod_node" {
 # Debug outputs (temporary)
 ############################
 output "debug_vcluster_keys" {
-  value = keys(var.vcluster)
+  value     = keys(var.vcluster)
+  sensitive = true
 }
 
 output "debug_vcluster_json" {
@@ -204,9 +205,11 @@ output "debug_vcluster_json" {
 }
 
 output "debug_kubernetes_version" {
-  value = try(var.vcluster.kubernetes.version, null)
+  value     = try(var.vcluster.kubernetes.version, null)
+  sensitive = true
 }
 
 output "debug_nodeclaim_properties" {
-  value = try(var.vcluster.nodeClaim.spec.properties, {})
+  value     = try(var.vcluster.nodeClaim.spec.properties, {})
+  sensitive = true
 }
