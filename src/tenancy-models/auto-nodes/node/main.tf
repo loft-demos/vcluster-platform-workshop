@@ -190,3 +190,23 @@ resource "kubernetes_pod_v1" "pod_node" {
     ]
   }
 }
+
+############################
+# Debug outputs (temporary)
+############################
+output "debug_vcluster_keys" {
+  value = keys(var.vcluster)
+}
+
+output "debug_vcluster_json" {
+  value     = jsonencode(var.vcluster)
+  sensitive = true
+}
+
+output "debug_kubernetes_version" {
+  value = try(var.vcluster.kubernetes.version, null)
+}
+
+output "debug_nodeclaim_properties" {
+  value = try(var.vcluster.nodeClaim.spec.properties, {})
+}
