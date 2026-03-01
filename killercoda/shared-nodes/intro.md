@@ -12,7 +12,7 @@ This scenario bootstraps:
 
 ## 2) Install vCluster Platform (reduced footprint)
 
-`vcluster platform start --values /root/lab/assets/vcp-values.yaml`{{exec}}
+`vcluster platform start --values https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/killercoda/shared-nodes/assets/vcp-values.yaml`{{exec}}
 
 This prints the hosted vCluster Platform URL and bootstrap username/password.
 
