@@ -1,11 +1,7 @@
-# vCluster Platform Workshop
+# vCluster Demos
 
-The vCluster Platform Workshop provides hands-on exercises that introduce platform engineers, DevOps teams, and cloud architects to building secure, scalable, multi-tenant Kubernetes environments using vCluster Platform. vCluster Platform provides the management layer that platform teams need to operate vCluster at scale.
+Hands-on KillerCoda scenarios for vCluster Platform.
 
-In this workshop, you will learn how to:
+## Available Scenarios
 
-- Deploy and manage virtual clusters using vCluster Platform
-- Implement different tenancy models (Shared, Dedicated, and Private Nodes)
-- Enable isolation between teams and workloads
-- Integrate vCluster Platform into GitOps-driven workflows
-- Manage multiple host clusters from a centralized control plane
+- vCluster Platform: Shared Nodes
