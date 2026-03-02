@@ -15,7 +15,7 @@
           "chmod": "+x"
         },
         {
-          "file": "values.yaml",
+          "file": "vcluster.yaml",
           "target": "/assets/"
         }
       ]
