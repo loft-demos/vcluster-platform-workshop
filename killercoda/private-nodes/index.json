@@ -8,7 +8,7 @@
       "foreground": "intro/foreground.sh"
     },
     "assets": {
-      "host01": [
+      "ubuntu": [
         {
           "file": "wait-background.sh",
           "target": "/ks/",
