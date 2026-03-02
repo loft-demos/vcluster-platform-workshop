@@ -1,11 +1,11 @@
 {
-  "title": "vCluster Demos",
+  "title": "vCluster Platform Tenancy Models Workshop",
   "description": "Hands-on vCluster Platform workshops and labs.",
   "items": [
     {
       "path": "shared-nodes",
-      "title": "vCluster Platform: Shared Nodes",
-      "description": "Bootstrap vCluster Platform on a pre-provisioned Kubernetes cluster and run the Shared Nodes workshop flow."
+      "title": "vCluster Platform: Shared Nodes Tenancy Model",
+      "description": "Bootstrap vCluster Platform on a pre-provisioned Kubernetes cluster and run the Shared Nodes workshop."
     }
   ]
 }

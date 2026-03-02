@@ -1,12 +1,10 @@
 # Shared Nodes: Setup + Lab
 
 This scenario bootstraps:
-- a `vind` Docker-backed cluster (`vcp-cluster`)
 - required CLIs (`kubectl`, `helm`, `vcluster`)
 
 ## 1) Validate bootstrap
 
-`vcluster connect vcp-cluster --driver docker || (vcluster create vcp-cluster --driver docker && vcluster connect vcp-cluster --driver docker)`{{exec}}
 `kubectl get nodes`{{exec}}
 `kubectl get ns vcluster-platform`{{exec}}
 
@@ -14,7 +12,7 @@ This scenario bootstraps:
 
 Use the preloaded local values file:
 
-`vcluster platform start --no-login --values /root/vcp-values.yaml`{{exec}}
+`vcluster platform start --no-login --values /assets/vcp-values.yaml`{{exec}}
 
 This prints the hosted vCluster Platform URL and bootstrap username/password.
 
@@ -23,10 +21,6 @@ This prints the hosted vCluster Platform URL and bootstrap username/password.
 Open the `https://<random>.loft.host` URL printed by the previous command in a new browser tab.
 
 ## 4) Run the Shared Nodes lab flow
-
-Use this workshop lab content:
-
-- `/root/labs/shared-nodes.md`
 
 For this scenario, focus on:
 - creating the Shared Nodes virtual cluster
