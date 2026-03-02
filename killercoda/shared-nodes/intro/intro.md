@@ -20,6 +20,14 @@ This prints the hosted vCluster Platform URL and bootstrap username/password.
 
 Open the `https://<random>.loft.host` URL printed by the previous command in a new browser tab.
 
+Set and persist `VCP_HOST` from the installed platform domain:
+
+`export VCP_HOST="https://$(kubectl -n vcluster-platform get secret loft-router-domain -o jsonpath='{.data.domain}' | base64 -d)" && echo "export VCP_HOST=${VCP_HOST}" >> ~/.bashrc && echo "${VCP_HOST}"`{{exec}}
+
+If you created an access key in the UI, CLI login is then:
+
+`vcluster platform login "${VCP_HOST}" --access-key "$ACCESS_KEY"`{{exec}}
+
 ## 4) Run the Shared Nodes lab flow
 
 For this scenario, focus on:
