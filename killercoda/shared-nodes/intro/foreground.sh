@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FILE=/root/wait-background.sh; while ! test -f ${FILE}; do clear; sleep 0.1; done; bash ${FILE}
+FILE=/ks/wait-background.sh; while ! test -f ${FILE}; do clear; sleep 0.1; done; bash ${FILE}
 vcluster platform start --values /root/vcp-values.yaml
