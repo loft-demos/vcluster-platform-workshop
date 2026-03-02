@@ -11,12 +11,12 @@
       "host01": [
         {
           "file": "wait-background.sh",
-          "target": "/root/wait-background.sh",
+          "target": "/ks/wait-background.sh",
           "chmod": "+x"
         },
         {
           "file": "vcp-values.yaml",
-          "target": "/root/vcp-values.yaml"
+          "target": "/assets/vcp-values.yaml"
         }
       ]
     },
