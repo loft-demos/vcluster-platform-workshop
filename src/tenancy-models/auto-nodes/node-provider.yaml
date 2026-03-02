@@ -15,21 +15,21 @@ spec:
           subPath: src/tenancy-models/auto-nodes/environment/infrastructure
     nodeTypes:
       - resources:
+          cpu: '500m'
+          memory: 1Gi
+          pods: '10'
+        name: small
+        metadata: {}
+      - resources:
           cpu: '1'
           memory: 2Gi
-          pods: 10
-        name: small
+          pods: '20'
+        name: medium-app
         metadata: {}
       - resources:
           cpu: '2'
           memory: 4Gi
-          pods: 20
-        name: medium-app
-        metadata: {}
-      - resources:
-          cpu: '4'
-          memory: 8Gi
-          pods: 30
+          pods: '30'
         name: large
         metadata: {}
   displayName: Pod Auto Nodes

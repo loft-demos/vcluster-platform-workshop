@@ -12,13 +12,9 @@ This scenario bootstraps:
 
 ## 2) Install vCluster Platform (reduced footprint)
 
-First copy the vcp-values.yaml to a local directory:
+Use the preloaded local values file:
 
-`curl -fsSL https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/killercoda/shared-nodes/assets/vcp-values.yaml -o /tmp/vcp-values.yaml`{{exec}}
-
-Then use the vCluster CLI to install vCluster Platform:
-
-`vcluster platform start --values /tmp/vcp-values.yaml`{{exec}}
+`vcluster platform start --no-login --values /root/vcp-values.yaml`{{exec}}
 
 This prints the hosted vCluster Platform URL and bootstrap username/password.
 
@@ -30,7 +26,7 @@ Open the `https://<random>.loft.host` URL printed by the previous command in a n
 
 Use this workshop lab content:
 
-- `labs/tenancy-models/shared-nodes.md`
+- `/root/labs/shared-nodes.md`
 
 For this scenario, focus on:
 - creating the Shared Nodes virtual cluster

@@ -1,0 +1,21 @@
+sync:
+  toHost:
+    ingresses:
+      enabled: true
+
+controlPlane:
+  coredns:
+    enabled: true
+    embedded: true
+  backingStore:
+    etcd:
+      embedded:
+        enabled: true
+  statefulSet:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi

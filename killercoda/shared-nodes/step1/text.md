@@ -12,4 +12,4 @@ If verification fails, inspect setup logs:
 Open vCluster Platform:
 
 - Run the install command from the intro page:
-- `vcluster platform start --values https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/killercoda/shared-nodes/assets/vcp-values.yaml`{{exec}}
+- `vcluster platform start --values /root/vcp-values.yaml`{{exec}}

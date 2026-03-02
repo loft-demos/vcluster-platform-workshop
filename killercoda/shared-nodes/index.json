@@ -3,8 +3,26 @@
   "description": "Bootstrap vCluster Platform on a pre-provisioned Kubernetes cluster and run the Shared Nodes workshop flow.",
   "details": {
     "intro": {
-      "text": "intro.md",
-      "background": "setup.sh"
+      "text": "intro/intro.md",
+      "background": "intro/background.sh",
+      "foreground": "intro/foreground.sh"
+    },
+    "assets": {
+      "host01": [
+        {
+          "file": "assets/wait-background.sh",
+          "target": "/root/wait-background.sh",
+          "chmod": "+x"
+        },
+        {
+          "file": "assets/vcp-values.yaml",
+          "target": "/root/vcp-values.yaml"
+        },
+        {
+          "file": "../../labs/tenancy-models/shared-nodes.md",
+          "target": "/root/labs/shared-nodes.md"
+        }
+      ]
     },
     "steps": [
       {
