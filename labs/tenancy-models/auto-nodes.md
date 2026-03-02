@@ -66,19 +66,24 @@ This lab exercise walks you through creating an Auto Nodes virtual cluster using
 ```bash
 vcluster connect vcp-cluster --driver docker
 ```
+2. Create an **Auto Nodes** `NodeProvider` that works with **vind** by running the following command in your terminal:
 
-2. Apply the minimal Auto Nodes `VirtualClusterTemplate`:
+```bash
+kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/tenancy-models/auto-nodes/node-provider.yaml
+```
+
+3. Apply the minimal Auto Nodes `VirtualClusterTemplate`:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/tenancy-models/auto-nodes/virtual-cluster-template.yaml
 ```
 
-3. In the vCluster Platform UI, go to **Virtual Clusters** in the **Default Project** and click **Create virtual cluster**.
-4. Click **Select Template** on the **Auto Nodes** template.
-5. Set the **Display Name** to *Auto Nodes vCluster*.
-6. Under **Parameters**, set **Auto Nodes Limit** to `1`, `3`, or `5` (use `3` unless you want to test tighter or larger pool limits).
-7. Click **Create virtual cluster**.
-8. After the vCluster is ready, open its configuration and confirm the template enforced:
+4. In the vCluster Platform UI, go to **Virtual Clusters** in the **Default Project** and click **Create virtual cluster**.
+5. Click **Select Template** on the **Auto Nodes** template.
+6. Set the **Display Name** to *Auto Nodes vCluster*.
+7. Under **Parameters**, set **Auto Nodes Limit** to `1`, `3`, or `5` (use `3` unless you want to test tighter or larger pool limits).
+8. Click **Create virtual cluster**.
+9. After the vCluster is ready, open its configuration and confirm the template enforced:
    - `privateNodes.enabled: true`
    - `privateNodes.autoNodes[0].provider: pod-auto-nodes`
    - `privateNodes.autoNodes[0].dynamic[0].limits.nodes` matches the selected parameter value (`1`, `3`, or `5`)

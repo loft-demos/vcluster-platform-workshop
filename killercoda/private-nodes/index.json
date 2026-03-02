@@ -1,0 +1,37 @@
+{
+  "title": "vCluster Platform: Private Nodes",
+  "description": "Bootstrap vCluster Platform on a **vind** cluster and run the Private Nodes workshop.",
+  "details": {
+    "intro": {
+      "text": "intro/intro.md",
+      "background": "intro/background.sh",
+      "foreground": "intro/foreground.sh"
+    },
+    "assets": {
+      "host01": [
+        {
+          "file": "wait-background.sh",
+          "target": "/ks/",
+          "chmod": "+x"
+        },
+        {
+          "file": "values.yaml",
+          "target": "/assets/"
+        }
+      ]
+    },
+    "steps": [
+      {
+        "title": "Validate Bootstrap",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      }
+    ],
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "backend": {
+    "imageid": "ubuntu-4GB"
+  }
+}

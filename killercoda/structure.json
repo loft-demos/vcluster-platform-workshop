@@ -6,6 +6,11 @@
       "path": "shared-nodes",
       "title": "vCluster Platform: Shared Nodes Tenancy Model",
       "description": "Bootstrap vCluster Platform on a pre-provisioned Kubernetes cluster and run the Shared Nodes workshop."
+    },
+    {
+      "path": "private-nodes",
+      "title": "vCluster Platform: Private Nodes Tenancy Model",
+      "description": "Bootstrap vCluster Platform on a **vind** cluster and run the Private Nodes workshop."
     }
   ]
 }

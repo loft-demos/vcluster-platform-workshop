@@ -1,0 +1,34 @@
+experimental:
+  docker:
+    nodes:
+    - name: "worker-1"
+      env:
+        - "NODE_ROLE=worker"
+    - name: "worker-2"
+      env:
+        - "NODE_ROLE=worker"
+  deploy:
+    vcluster:
+      helm:
+        - chart:
+            name: vcluster-platform
+            repo: https://charts.loft.sh/
+            version: 4.7.0
+          values: |-
+            config:
+              # only uncomment if you have your own FQDN to use for vCluster Platform
+              # loftHost: "<your-fully-qualifed-domain-name>"
+              costControl:
+                enabled: false
+              imageBuilder:
+                enabled: false
+            resources:
+              requests:
+                cpu: 500m
+                memory: 512Mi
+              limits:
+                cpu: "2"
+                memory: 2Gi
+          release:
+            name: vcluster-platform
+            namespace: vcluster-platform
