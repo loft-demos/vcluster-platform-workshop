@@ -4,9 +4,6 @@ experimental:
     - name: "worker-1"
       env:
         - "NODE_ROLE=worker"
-    - name: "worker-2"
-      env:
-        - "NODE_ROLE=worker"
   deploy:
     vcluster:
       helm:

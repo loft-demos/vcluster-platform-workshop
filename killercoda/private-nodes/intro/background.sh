@@ -122,9 +122,7 @@ main() {
   install_kubectl
   install_helm
   install_vcluster
-  ensure_cluster
-  kubectl get ns "${PLATFORM_NAMESPACE}" >/dev/null 2>&1 || kubectl create ns "${PLATFORM_NAMESPACE}"
-  log "Bootstrap complete. Next step in intro: run 'vcluster platform start'."
+  log "Bootstrap complete. Next step in intro to create vind cluster."
 }
 
 main "$@"
