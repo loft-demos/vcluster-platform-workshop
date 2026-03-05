@@ -57,7 +57,7 @@ EOT
 resource "kubernetes_secret_v1" "node" {
   metadata {
     name      = "${local.nodeclaim_name}-pod"
-    namespace = pod-nodes
+    namespace = "pod-nodes"
     labels    = local.common_labels
   }
 
