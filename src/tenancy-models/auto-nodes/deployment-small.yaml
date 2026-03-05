@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: large-app
+  name: small-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: large-app
+      app: small-app
   template:
     metadata:
       labels:
-        app: large-app
+        app: small-app
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app: large-app
+                  app: small-app
               topologyKey: kubernetes.io/hostname
       containers:
       - name: burn
@@ -26,8 +26,8 @@ spec:
         args: ["while true; do :; done"]
         resources:
           requests:
-            cpu: "850m"
-            memory: "700Mi"
+            cpu: "75m"
+            memory: "64Mi"
           limits:
-            cpu: "850m"
-            memory: "700Mi"
+            cpu: "75m"
+            memory: "64Mi"
