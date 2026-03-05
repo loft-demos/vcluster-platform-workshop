@@ -42,7 +42,7 @@ EOT
 
   node_cpu = tostring(var.vcluster.nodeType.spec.resources.cpu)
   node_mem = tostring(var.vcluster.nodeType.spec.resources.memory)
-  node_pods = tostring(var.vcluster.nodeType.spec.resources.pods)
+  node_pods = tostring(try(var.vcluster.nodeType.spec.resources.pods, 20))
 
   # Workshop-friendly: Guaranteed QoS (requests == limits)
   req_cpu = local.node_cpu
