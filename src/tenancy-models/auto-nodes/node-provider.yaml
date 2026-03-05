@@ -18,18 +18,18 @@ spec:
           cpu: '500m'
           memory: 1Gi
           pods: '10'
-        name: small
+        name: a-small
         metadata: {}
       - resources:
           cpu: '1'
           memory: 2Gi
           pods: '20'
-        name: medium-app
+        name: b-medium
         metadata: {}
       - resources:
           cpu: '2'
           memory: 4Gi
           pods: '30'
-        name: large
+        name: c-large
         metadata: {}
   displayName: Pod Auto Nodes
