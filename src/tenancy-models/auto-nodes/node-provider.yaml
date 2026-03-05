@@ -20,16 +20,19 @@ spec:
           pods: '10'
         name: a-small
         metadata: {}
+        maxCapacity: 8
       - resources:
           cpu: '750m'
           memory: '512Mi'
           pods: '20'
         name: b-medium
         metadata: {}
+        maxCapacity: 4
       - resources:
           cpu: '1'
           memory: 1Gi
           pods: '30'
         name: c-large
         metadata: {}
+        maxCapacity: 2
   displayName: Pod Auto Nodes
