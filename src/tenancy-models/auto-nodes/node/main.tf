@@ -12,7 +12,6 @@ provider "kubernetes" {}
 locals {
   nodeclaim_name = var.vcluster.nodeClaim.metadata.name
   vcluster_ns    = var.vcluster.namespace
-  node_namespace = "pod-nodes"
 
   test_prop = try(var.vcluster.nodeClaim.spec.properties["test"], null)
   kubernetes_version = try(var.vcluster.kubeVersion, "v1.35.0")
@@ -58,7 +57,7 @@ EOT
 resource "kubernetes_secret_v1" "node" {
   metadata {
     name      = "${local.nodeclaim_name}-pod"
-    namespace = local.node_namespace
+    namespace = local.vcluster_ns
     labels    = local.common_labels
   }
 
@@ -76,7 +75,7 @@ resource "kubernetes_secret_v1" "node" {
 resource "kubernetes_pod_v1" "pod_node" {
   metadata {
     name      = local.nodeclaim_name
-    namespace = local.node_namespace
+    namespace = local.vcluster_ns
     labels    = local.common_labels
 
     annotations = merge(var.extra_annotations, {

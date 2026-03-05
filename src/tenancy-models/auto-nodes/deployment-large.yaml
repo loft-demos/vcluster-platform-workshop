@@ -26,8 +26,8 @@ spec:
         args: ["while true; do :; done"]
         resources:
           requests:
-            cpu: "2200m"
-            memory: "64Mi"
+            cpu: "450m"
+            memory: "256Mi"
           limits:
-            cpu: "2200m"
-            memory: "64Mi"
+            cpu: "450m"
+            memory: "256Mi"
