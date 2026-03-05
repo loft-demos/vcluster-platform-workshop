@@ -40,6 +40,7 @@ In production environments, the same NodeProvider/NodeType/NodeClaim model can p
 - Azure virtual machines
 - GCP compute instances
 - Bare metal servers
+- KubeVirt VMs
 - Or other custom infrastructure targets
 
 In this lab, we use a lightweight backend purely to demonstrate the workflow — the control plane APIs and scaling behavior are identical to real-world deployments.
@@ -101,13 +102,13 @@ This lab exercise uses two deployments to drive Auto Nodes scaling behavior. You
 vcluster connect auto-nodes-vcluster --project default
 ```
 
-2. Deploy the medium workload:
+2. Deploy the small workload:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/tenancy-models/auto-nodes/deployment-med.yaml
+kubectl apply -f https://raw.githubusercontent.com/loft-demos/vcluster-platform-workshop/refs/heads/main/src/tenancy-models/auto-nodes/deployment-small.yaml
 ```
 
-3. Watch scheduling and node provisioning:
+3. Watch scheduling and node provisioning - the small workload should not result in a scale up unless something else was already deployed:
 
 ```bash
 kubectl get pods -w
@@ -115,11 +116,11 @@ kubectl get nodeclaims -w
 kubectl get nodes -w
 ```
 
-4. Verify the medium workload is running and placed on an auto-provisioned node:
+4. Verify the small workload is running and placed on an auto-provisioned node:
 
 ```bash
 kubectl get deploy,pod,node
-kubectl describe pod -l app=medium-app
+kubectl describe pod -l app=small-app
 ```
 
 5. Deploy the large workload:
