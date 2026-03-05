@@ -16,19 +16,19 @@ spec:
     nodeTypes:
       - resources:
           cpu: '500m'
-          memory: 1Gi
+          memory: '256Mi'
           pods: '10'
         name: a-small
         metadata: {}
       - resources:
-          cpu: '1'
-          memory: 2Gi
+          cpu: '750m'
+          memory: '512Mi'
           pods: '20'
         name: b-medium
         metadata: {}
       - resources:
-          cpu: '2'
-          memory: 4Gi
+          cpu: '1'
+          memory: 1Gi
           pods: '30'
         name: c-large
         metadata: {}
